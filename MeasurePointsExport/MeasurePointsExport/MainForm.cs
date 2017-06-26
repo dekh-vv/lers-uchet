@@ -69,14 +69,13 @@ namespace MeasurePointsExport
 
         private void butExport_Click(object sender, EventArgs e)
         {
-            
             //Директория сохраннения сгенерированного файла
             string pathToXmlFile = Environment.CurrentDirectory + "\\" + "UniversalReader-Settings.xml";
 
             #region Начинаем работу с XML
             //Создаем XML-файл
             XmlTextWriter textWriter = new XmlTextWriter(pathToXmlFile, Encoding.UTF8);
-            
+
             //Создаём в файле заголовок XML-документа
             textWriter.WriteStartDocument();
 
@@ -91,10 +90,10 @@ namespace MeasurePointsExport
 
             //Для занесения данных мы будем использовать класс XmlDocument
             XmlDocument document = new XmlDocument();
-            
+
             //Загружаем файл
             document.Load(pathToXmlFile);
-            #endregion 
+            #endregion
 
             #region Создаем XML-записи
             //Номер COM порта
@@ -106,16 +105,16 @@ namespace MeasurePointsExport
             XmlNode listenPort = document.CreateElement("listenPort");
             document.DocumentElement.AppendChild(listenPort);
             listenPort.InnerText = "10000";
-            
+
             //Директория хранения данных с опроса 
             XmlNode saveDirectory = document.CreateElement("saveDirectory");
             saveDirectory.InnerText = "C:\\Program Files\\LERS\\UniversalReader\\LERS";
             document.DocumentElement.AppendChild(saveDirectory);
-           
+
             #region Эспорт точек в конфигурационный файл настроек Универсальнго пульта
 
             DateTime dateTimeStart = DateTime.Now;
-     
+
             //Выводим все точки учета 
             MeasurePoint[] measurePointsCollection = lersServer.MeasurePoints.GetList(MeasurePointType.Regular, MeasurePointInfoFlags.Attributes | MeasurePointInfoFlags.Equipment);
             foreach (MeasurePoint points in measurePointsCollection)
@@ -125,7 +124,7 @@ namespace MeasurePointsExport
                 {
                     // Объявляем эсземпляр оборудования 
                     Equipment equipment = lersServer.Equipment.GetById(points.Device.Id, EquipmentInfo.Bindings);
-                    
+
                     var serial = points.Device.SerialNumber;
 
                     //Объявляем модель оборудования
@@ -156,20 +155,17 @@ namespace MeasurePointsExport
                     measurePointXML.AppendChild(systemType);
 
                     // Блок "определяем инженерную систему для ГВС" в XML файле
-                    if (points.SystemType == SystemType.HotWater)
+                    // Значение, определяющее, что эта точка учета имеет инженерную систему двухтрубного ГВС
+                    XmlNode isDoublePipeHotWaterSystemXML = document.CreateElement("isDoublePipeHotWaterSystem");
+                    if (points.IsDoublePipeHotWaterSystem)
                     {
-                        // Значение, определяющее, что эта точка учета имеет инженерную систему двухтрубного ГВС
-                        XmlNode isDoublePipeHotWaterSystemXML = document.CreateElement("isDoublePipeHotWaterSystem");
-                        if (points.IsDoublePipeHotWaterSystem)
-                        {
-                            isDoublePipeHotWaterSystemXML.InnerText = "true";
-                        }
-                        else
-                        {
-                            isDoublePipeHotWaterSystemXML.InnerText = "false";
-                        }
-                        measurePointXML.AppendChild(isDoublePipeHotWaterSystemXML);
+                        isDoublePipeHotWaterSystemXML.InnerText = "true";
                     }
+                    else
+                    {
+                        isDoublePipeHotWaterSystemXML.InnerText = "false";
+                    }
+                    measurePointXML.AppendChild(isDoublePipeHotWaterSystemXML);
 
                     // Блок "номер по порядку точки учета" в XML файле
                     XmlNode counterId = document.CreateElement("counterId");
@@ -309,7 +305,7 @@ namespace MeasurePointsExport
             DateTime dateTimeEnd = DateTime.Now;
             TimeSpan timeSpan = dateTimeEnd - dateTimeStart;
             double iteration_time_simple = (double)timeSpan.TotalMilliseconds / 1000;
-            #endregion 
+            #endregion
 
             #endregion
 
@@ -326,7 +322,7 @@ namespace MeasurePointsExport
             //Отключаемся от сервера через 2 секунды
             lersServer.Disconnect(2000);
 
-            
+
         }
     }
 }
