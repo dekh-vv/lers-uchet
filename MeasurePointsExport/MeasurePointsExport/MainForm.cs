@@ -42,7 +42,7 @@ namespace MeasurePointsExport
 
             try
             {
-                lersServer.Connect("localhost", 10000, authInfo);
+                lersServer.Connect("10.192.1.4", 10000, authInfo);
             }
             catch (Exception ex)
             {
@@ -67,7 +67,7 @@ namespace MeasurePointsExport
             }
         }
 
-        private void butExport_Click(object sender, EventArgs e)
+        private async void butExport_Click(object sender, EventArgs e)
         {
             //Директория сохраннения сгенерированного файла
             string pathToXmlFile = Environment.CurrentDirectory + "\\" + "UniversalReader-Settings.xml";
@@ -117,19 +117,20 @@ namespace MeasurePointsExport
 
             //Выводим все точки учета 
             MeasurePoint[] measurePointsCollection = lersServer.MeasurePoints.GetList(MeasurePointType.Regular, MeasurePointInfoFlags.Attributes | MeasurePointInfoFlags.Equipment);
+            //MeasurePoint[] measurePointsCollection = lersServer.MeasurePoints.GetList(MeasurePointType.Regular, MeasurePointInfoFlags.Attributes | MeasurePointInfoFlags.Equipment);
             foreach (MeasurePoint points in measurePointsCollection)
             {
                 // Проверяем, чтобы серийный номер оборудования был указан для каждой точки
-                if (points.Device != null)
+                if (points.Device != null && points.SystemType.GetHashCode() != 32)
                 {
                     // Объявляем эсземпляр оборудования 
-                    Equipment equipment = lersServer.Equipment.GetById(points.Device.Id, EquipmentInfo.Bindings);
+                    Equipment equipment = await lersServer.Equipment.GetByIdAsync(points.Device.Id, EquipmentInfo.Bindings);
 
                     var serial = points.Device.SerialNumber;
 
                     //Объявляем модель оборудования
-                    EquipmentModel equipmentModel = lersServer.Equipment.GetModelById(points.Device.Model.Id);
-
+                    EquipmentModel equipmentModel = await lersServer.Equipment.GetModelByIdAsync(points.Device.Model.Id);
+                   
                     // Блок "точка учета" в XML файле 
                     XmlNode measurePointXML = document.CreateElement("measurePoint");
                     document.DocumentElement.AppendChild(measurePointXML);
@@ -288,9 +289,9 @@ namespace MeasurePointsExport
 
                                 // Блок "Вес импульса точки учета" в XML файле. В связи с выходом версии R22.05 - данный параметр не используется
                                 // Для ранних версий этот параметр обязателен 
-                                //XmlNode pulseRatio = document.CreateElement("pulseRatio");
-                                //pulseRatio.InnerText = "1";
-                                //cell.AppendChild(pulseRatio);
+                                XmlNode pulseRatio = document.CreateElement("pulseRatio");
+                                pulseRatio.InnerText = "1";
+                                cell.AppendChild(pulseRatio);
                             }
                         }
                     }
@@ -302,6 +303,7 @@ namespace MeasurePointsExport
                     measurePointXML.AppendChild(responseDelay);
                 }
             }
+
             DateTime dateTimeEnd = DateTime.Now;
             TimeSpan timeSpan = dateTimeEnd - dateTimeStart;
             double iteration_time_simple = (double)timeSpan.TotalMilliseconds / 1000;
@@ -319,7 +321,7 @@ namespace MeasurePointsExport
             tbPassword.Text = "";
             butExport.Enabled = false;
 
-            //Отключаемся от сервера через 2 секунды
+            //Отключаемся от сервера через 2 секунд
             lersServer.Disconnect(2000);
 
 

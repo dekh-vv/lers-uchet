@@ -1,2 +1,1 @@
 G:\!!!Новые проекты C#\github\MeasurePointsExport\MeasurePointsExport\bin\Debug\MeasurePointsExport.exe.config
-G:\!!!Новые проекты C#\github\lers-uchet\MeasurePointsExport\MeasurePointsExport\bin\Debug\MeasurePointsExport.exe.config
