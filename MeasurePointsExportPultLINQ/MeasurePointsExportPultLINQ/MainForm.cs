@@ -58,7 +58,7 @@ namespace MeasurePointsExportPultLINQ
             BasicAuthenticationInfo authInfo = new BasicAuthenticationInfo(login, password);
             try
             {
-                lersServer.Connect(tbServer.Text, 10000, authInfo);
+                lersServer.Connect(tbServer.Text, Convert.ToUInt16(tbPort.Text), authInfo);
             }
             catch (Exception ex)
             {
