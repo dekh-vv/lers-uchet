@@ -23,7 +23,6 @@ namespace MeasurePointsExportPultLINQ
         ChangeServer changeServer;
         private DateTime dateTimeStart, dateTimeEnd;
         private int? measurepointNumber;
-        private int number;
         private string _heatLeadIn, _supplyChannel, _returnChannel;
         public string _tbServer, _tbPort;
 
@@ -239,7 +238,7 @@ namespace MeasurePointsExportPultLINQ
                     // Объявляем экземпляр оборудования
                     Equipment equipment = await lersServer.Equipment.GetByIdAsync(points.Device.Id, EquipmentInfo.Bindings);
 
-                    if (points.SystemType != SystemType.Electricity)
+                    if (points.SystemType != SystemType.Electricity) // Электичество не поддерживает связь точки учета с устройством
                     {
                         //Связь точки учета с устройством
                         DeviceChannel[] deviceChannelCollection = equipment.Bindings.Channels;
@@ -317,7 +316,7 @@ namespace MeasurePointsExportPultLINQ
             xdoc.Save(pathToXmlFile);
 
             // Расячитываем время выполнения
-            DateTime dateTimeEnd = DateTime.Now;
+            dateTimeEnd = DateTime.Now;
             TimeSpan timeSpan = dateTimeEnd - dateTimeStart;
             int minute = timeSpan.Minutes;
             int seconds = timeSpan.Seconds;
