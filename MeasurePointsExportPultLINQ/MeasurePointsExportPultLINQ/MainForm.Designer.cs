@@ -175,20 +175,20 @@
             this.helpMenu.Name = "helpMenu";
             this.helpMenu.ShortcutKeyDisplayString = "(F1)";
             this.helpMenu.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.helpMenu.Size = new System.Drawing.Size(152, 22);
+            this.helpMenu.Size = new System.Drawing.Size(150, 22);
             this.helpMenu.Text = "Помощь";
             this.helpMenu.Click += new System.EventHandler(this.helpMenu_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(147, 6);
             // 
             // aboutMenu
             // 
             this.aboutMenu.Name = "aboutMenu";
             this.aboutMenu.ShortcutKeyDisplayString = "";
-            this.aboutMenu.Size = new System.Drawing.Size(152, 22);
+            this.aboutMenu.Size = new System.Drawing.Size(150, 22);
             this.aboutMenu.Text = "О программе";
             this.aboutMenu.Click += new System.EventHandler(this.aboutMenu_Click);
             // 
@@ -210,7 +210,6 @@
             this.tbServer.Name = "tbServer";
             this.tbServer.Size = new System.Drawing.Size(75, 21);
             this.tbServer.TabIndex = 10;
-            this.tbServer.Text = "10.192.1.4";
             // 
             // lblPort
             // 
