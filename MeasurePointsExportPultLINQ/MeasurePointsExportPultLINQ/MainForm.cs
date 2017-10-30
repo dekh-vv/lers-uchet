@@ -222,7 +222,7 @@ namespace MeasurePointsExportPultLINQ
                         new XElement("adapterAddress", points.Device.PollSettings.AdapterAddress), // Блок "адрес адаптера устройства точки учета" в XML файле
                         _portSpeed = new XElement("portSpeed"), // Блок "скорость порта опроса оборудования" в XML файле
                         new XElement("flowControl", equipmentModel.DataInterface.SupportedFlowControls.GetHashCode()), // Блок "вид управления потоком при обмене данными через COM-порт устройства точки учета" в XML файле
-                        heatLeadIn = new XElement("heatLeadIn") // Блок "Номер теплового ввода точки учета" в XML файле
+                        heatLeadIn = new XElement("heatLeadIn",1) // Блок "Номер теплового ввода точки учета" в XML, если пустое значение - Ставим по умолчанию "1"
                      ));
 
                     //Значение, определяющее, что эта точка учета имеет инженерную систему двухтрубного ГВС
@@ -267,12 +267,7 @@ namespace MeasurePointsExportPultLINQ
                                     _returnChannel = deviceChannel.ChannelNumber.ToString();
                                     _measurepoint.SetElementValue("returnChannel", _returnChannel);
                                 }
-                            }
-                            // Блок "Номер теплового ввода точки учета" если пустое значение - Ставим по умолчанию "1"
-                            else if (_heatLeadIn != null)
-                            {
-                                heatLeadIn.Value = "1";
-                            }
+                            }      
                         }
 
                         // Блок "Ячейки"
