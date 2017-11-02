@@ -53,6 +53,7 @@
             // 
             // butCancel
             // 
+            this.butCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.butCancel.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.butCancel.Location = new System.Drawing.Point(222, 132);
             this.butCancel.Name = "butCancel";
@@ -131,8 +132,10 @@
             // 
             // ChangeServer
             // 
+            this.AcceptButton = this.butOk;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.butCancel;
             this.ClientSize = new System.Drawing.Size(317, 170);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.tbPort);

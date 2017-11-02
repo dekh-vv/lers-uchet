@@ -241,34 +241,38 @@ namespace MeasurePointsExportPultLINQ
                     if (points.SystemType != SystemType.Electricity) // Электичество не поддерживает связь точки учета с устройством
                     {
                         //Связь точки учета с устройством
-                        DeviceChannel[] deviceChannelCollection = equipment.Bindings.Channels;
-                        foreach (DeviceChannel deviceChannel in deviceChannelCollection)
+                        try
                         {
-                            //Проверяем чтобы номер точки учета совпадал  
-                            int? channelNumber = deviceChannel.MeasurePoint.Number;
-                            if (measurepointNumber == channelNumber)
+                            DeviceChannel[] deviceChannelCollection = equipment.Bindings.Channels;
+                            foreach (DeviceChannel deviceChannel in deviceChannelCollection)
                             {
-                                // Блок "Номер теплового ввода точки учета" в XML файле
-                                //_heatLeadIn = deviceChannel.HeatLeadIn.ToString();
-                                _heatLeadIn = deviceChannel.HeatLeadIn.ToString();
-                                heatLeadIn.Value = _heatLeadIn;
+                                //Проверяем чтобы номер точки учета совпадал  
+                                int? channelNumber = deviceChannel.MeasurePoint.Number;
+                                if (measurepointNumber == channelNumber)
+                                {
+                                    // Блок "Номер теплового ввода точки учета" в XML файле
+                                    //_heatLeadIn = deviceChannel.HeatLeadIn.ToString();
+                                    _heatLeadIn = deviceChannel.HeatLeadIn.ToString();
+                                    heatLeadIn.Value = _heatLeadIn;
 
-                                //Записываем значения для подающей магистрали 
-                                if (deviceChannel.IsSupply)
-                                {
-                                    _supplyChannel = deviceChannel.ChannelNumber.ToString();
-                                    _returnChannel = "0";
-                                    _measurepoint.Add(new XElement("supplyChannel", _supplyChannel), // Блок "подающая магистраль точки учета" в XML файле
-                                        new XElement("returnChannel", _returnChannel)); // Блок "обратная магистраль точки учета" в XML файле
+                                    //Записываем значения для подающей магистрали 
+                                    if (deviceChannel.IsSupply)
+                                    {
+                                        _supplyChannel = deviceChannel.ChannelNumber.ToString();
+                                        _returnChannel = "0";
+                                        _measurepoint.Add(new XElement("supplyChannel", _supplyChannel), // Блок "подающая магистраль точки учета" в XML файле
+                                            new XElement("returnChannel", _returnChannel)); // Блок "обратная магистраль точки учета" в XML файле
+                                    }
+                                    //Записываем значения для обратной магистрали 
+                                    else
+                                    {
+                                        _returnChannel = deviceChannel.ChannelNumber.ToString();
+                                        _measurepoint.SetElementValue("returnChannel", _returnChannel);
+                                    }
                                 }
-                                //Записываем значения для обратной магистрали 
-                                else
-                                {
-                                    _returnChannel = deviceChannel.ChannelNumber.ToString();
-                                    _measurepoint.SetElementValue("returnChannel", _returnChannel);
-                                }
-                            }      
+                            }
                         }
+                        catch { }
 
                         // Блок "Ячейки"
                         try
