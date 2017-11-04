@@ -90,7 +90,6 @@
             this.tbServer.Name = "tbServer";
             this.tbServer.Size = new System.Drawing.Size(156, 21);
             this.tbServer.TabIndex = 21;
-            this.tbServer.Text = "10.192.1.4";
             // 
             // tbPort
             // 
