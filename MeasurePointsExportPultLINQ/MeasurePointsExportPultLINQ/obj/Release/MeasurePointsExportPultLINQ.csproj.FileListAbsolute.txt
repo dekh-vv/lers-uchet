@@ -49,3 +49,4 @@ D:\Проект главный\lers-uchet\MeasurePointsExportPultLINQ\MeasurePoi
 D:\Проект главный\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\obj\Release\MeasurePointsExportPultLINQ.MainForm.resources
 D:\Проект главный\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\obj\Release\MeasurePointsExportPultLINQ.Properties.Resources.resources
 D:\Проект главный\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\obj\Release\MeasurePointsExportPultLINQ.csproj.GenerateResource.Cache
+G:\!!!Новые проекты C#\github\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\obj\Release\MeasurePointsExportPultLINQ.csprojResolveAssemblyReference.cache
