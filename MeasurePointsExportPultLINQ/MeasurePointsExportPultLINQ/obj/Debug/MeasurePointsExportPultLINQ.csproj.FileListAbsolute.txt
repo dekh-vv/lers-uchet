@@ -1,0 +1,17 @@
+D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\bin\Debug\MeasurePointsExportPultLINQ.exe.config
+D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\bin\Debug\MeasurePointsExportPultLINQ.exe
+D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\bin\Debug\MeasurePointsExportPultLINQ.pdb
+D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\bin\Debug\Lers.Core.dll
+D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\bin\Debug\Lers.System.dll
+D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\bin\Debug\Lers.Utils.dll
+D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\bin\Debug\Google.Protobuf.dll
+D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\bin\Debug\Lers.Proto.dll
+D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\bin\Debug\Lers.Security.dll
+D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\obj\Debug\MeasurePointsExportPultLINQ.AboutForm.resources
+D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\obj\Debug\MeasurePointsExportPultLINQ.ChangeServer.resources
+D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\obj\Debug\MeasurePointsExportPultLINQ.HelpForm.resources
+D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\obj\Debug\MeasurePointsExportPultLINQ.MainForm.resources
+D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\obj\Debug\MeasurePointsExportPultLINQ.Properties.Resources.resources
+D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\obj\Debug\MeasurePointsExportPultLINQ.csproj.GenerateResource.Cache
+D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\obj\Debug\MeasurePointsExportPultLINQ.exe
+D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\obj\Debug\MeasurePointsExportPultLINQ.pdb

@@ -42,6 +42,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Resources\Lers.Core.dll</HintPath>
     </Reference>
+    <Reference Include="Lers.Proto, Version=1.0.0.0, Culture=neutral, PublicKeyToken=e7c6d6299713498c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Resources\Lers.Proto.dll</HintPath>
+    </Reference>
+    <Reference Include="Lers.Security, Version=1.0.0.0, Culture=neutral, PublicKeyToken=e7c6d6299713498c, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Resources\Lers.Security.dll</HintPath>
+    </Reference>
     <Reference Include="Lers.System, Version=3.0.0.0, Culture=neutral, PublicKeyToken=e7c6d6299713498c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Resources\Lers.System.dll</HintPath>

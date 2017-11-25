@@ -22,8 +22,6 @@ D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsE
 D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\bin\Release\MeasurePointsExportPultLINQ.pdb
 D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\bin\Release\Lers.Core.dll
 D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\bin\Release\Lers.System.dll
-D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\bin\Release\Lers.Utils.dll
-D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\bin\Release\Google.Protobuf.dll
 D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\bin\Release\Lers.Proto.dll
 D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\bin\Release\Lers.Security.dll
 D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\obj\Release\MeasurePointsExportPultLINQ.AboutForm.resources
@@ -50,3 +48,6 @@ D:\Проект главный\lers-uchet\MeasurePointsExportPultLINQ\MeasurePoi
 D:\Проект главный\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\obj\Release\MeasurePointsExportPultLINQ.Properties.Resources.resources
 D:\Проект главный\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\obj\Release\MeasurePointsExportPultLINQ.csproj.GenerateResource.Cache
 G:\!!!Новые проекты C#\github\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\obj\Release\MeasurePointsExportPultLINQ.csprojResolveAssemblyReference.cache
+D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\obj\Release\MeasurePointsExportPultLINQ.csprojResolveAssemblyReference.cache
+D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\bin\Release\Google.Protobuf.dll
+D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\bin\Release\Lers.Utils.dll

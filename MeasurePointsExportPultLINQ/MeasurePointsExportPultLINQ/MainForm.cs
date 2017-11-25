@@ -56,13 +56,29 @@ namespace MeasurePointsExportPultLINQ
             }
 
             BasicAuthenticationInfo authInfo = new BasicAuthenticationInfo(login, password);
+
             try
             {
+                //Игнорируем разницу в версиях в ЛЭРС Учет
+                lersServer.VersionMismatch += (sender, e) => e.Ignore = true;
+
                 lersServer.Connect(tbServer.Text, Convert.ToUInt16(tbPort.Text), authInfo);
             }
-            catch (Exception ex)
+            catch (ServerConnectionException connection)
             {
-                MessageBox.Show("Ошибка подключения к серверу.\r\n" + ex.Message, "Ошибка входа", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(connection.Message, "Ошибка подключения", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                tbLogin.Select();
+                return;
+            }
+            catch (AuthorizationFailedException authorization)
+            {
+                MessageBox.Show(authorization.Message, "Ошибка входа", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                tbLogin.Select();
+                return;
+            }
+            catch (LersServerException server)
+            {
+                MessageBox.Show(server.Message, "Ошибка обработки запроса сервером", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 tbLogin.Select();
                 return;
             }
@@ -160,6 +176,7 @@ namespace MeasurePointsExportPultLINQ
 
         private async void butExport_Click(object sender, EventArgs e)
         {
+            
             // Блокируем элементы на форме
             waitProgressBar.Style = ProgressBarStyle.Marquee;
             waitProgressBar.MarqueeAnimationSpeed = 20;
@@ -192,122 +209,130 @@ namespace MeasurePointsExportPultLINQ
             #region Создаем элементы XML-файла
             //Объявляем класс, реализующий интерфейс точки учёта
             MeasurePoint[] measurePointsCollection = lersServer.MeasurePoints.GetList(MeasurePointType.Regular, MeasurePointInfoFlags.Attributes | MeasurePointInfoFlags.Equipment);
-
-            //Выводим все точки учёта из коллекции
-            foreach (MeasurePoint points in measurePointsCollection)
+            try
             {
-                // Проверяем, чтобы серийный номер оборудования был указан для каждой точки
-                if (points.Device != null)
+                //Выводим все точки учёта из коллекции
+                foreach (MeasurePoint points in measurePointsCollection)
                 {
-                    measurepointNumber = points.Number;
-
-                    string serial = points.Device.SerialNumber;
-
-                    //Объявляем модель оборудования
-                    EquipmentModel equipmentModel = await lersServer.Equipment.GetModelByIdAsync(points.Device.Model.Id);
-
-                    xdoc.Element("settings").Add(_measurepoint = new XElement("measurePoint",  // Блок "точка учета" в XML файле       
-                        new XElement("syncNumber", measurepointNumber), // Блок "номер точки учета" в XML файле
-                        new XElement("title", points.FullTitle), // Блок "наименование точки учета" в XML файле
-                        new XElement("address", points.Address), // Блок "Адрес точки учета" в XML файле
-                        new XElement("systemType", points.SystemType.GetHashCode()), // Блок "Тип точки учета" в XML файле
-                        _isDoublePipeHotWaterSystem = new XElement("isDoublePipeHotWaterSystem"), // Блок "определяем инженерную систему для ГВС" в XML файле 
-                        new XElement("counterId", points.Id), // Блок "номер по порядку точки учета" в XML файле
-                        new XElement("counterModel", points.Device.Model.Id), // Блок "ID оборудования точки учета" в XML файле
-                        new XElement("counterSerialNumber", serial), // Блок "серийный номер оборудования точки учета" в XML файле
-                        new XElement("networkAddress", points.Device.NetworkAddress), // Блок "сетевой адрес устройства точки учета" в XML файле
-                        new XElement("password", points.Device.Password), // Блок "пароль для доступа к устройству точки учета" в XML файле
-                        new XElement("protocolId", 0),  // Блок "протокол передачи данных устройства точки учета" в XML файле
-                        new XElement("adapterModel", 0), // Блок "модель адаптера устройства точки учета" в XML файле
-                        new XElement("adapterAddress", points.Device.PollSettings.AdapterAddress), // Блок "адрес адаптера устройства точки учета" в XML файле
-                        _portSpeed = new XElement("portSpeed"), // Блок "скорость порта опроса оборудования" в XML файле
-                        new XElement("flowControl", equipmentModel.DataInterface.SupportedFlowControls.GetHashCode()), // Блок "вид управления потоком при обмене данными через COM-порт устройства точки учета" в XML файле
-                        heatLeadIn = new XElement("heatLeadIn",1) // Блок "Номер теплового ввода точки учета" в XML, если пустое значение - Ставим по умолчанию "1"
-                     ));
-
-                    //Значение, определяющее, что эта точка учета имеет инженерную систему двухтрубного ГВС
-                    if (points.IsDoublePipeHotWaterSystem)
-                        _isDoublePipeHotWaterSystem.Value = "true";
-                    else _isDoublePipeHotWaterSystem.Value = "false";
-
-                    //В моем случае - скорость порта на ВКТ настроена на 19200 
-                    if (points.Device.Model.Id == 179)
-                        _portSpeed.Value = "19200";
-                    else _portSpeed.Value = "9600";
-
-                    // Объявляем экземпляр оборудования
-                    Equipment equipment = await lersServer.Equipment.GetByIdAsync(points.Device.Id, EquipmentInfo.Bindings);
-
-                    if (points.SystemType != SystemType.Electricity) // Электичество не поддерживает связь точки учета с устройством
+                    // Проверяем, чтобы серийный номер оборудования был указан для каждой точки
+                    if (points.Device != null)
                     {
-                        //Связь точки учета с устройством
-                        try
-                        {
-                            DeviceChannel[] deviceChannelCollection = equipment.Bindings.Channels;
-                            foreach (DeviceChannel deviceChannel in deviceChannelCollection)
-                            {
-                                //Проверяем чтобы номер точки учета совпадал  
-                                int? channelNumber = deviceChannel.MeasurePoint.Number;
-                                if (measurepointNumber == channelNumber)
-                                {
-                                    // Блок "Номер теплового ввода точки учета" в XML файле
-                                    //_heatLeadIn = deviceChannel.HeatLeadIn.ToString();
-                                    _heatLeadIn = deviceChannel.HeatLeadIn.ToString();
-                                    heatLeadIn.Value = _heatLeadIn;
+                        measurepointNumber = points.Number;
 
-                                    //Записываем значения для подающей магистрали 
-                                    if (deviceChannel.IsSupply)
+                        string serial = points.Device.SerialNumber;
+
+                        //Объявляем модель оборудования
+                        EquipmentModel equipmentModel = await lersServer.Equipment.GetModelByIdAsync(points.Device.Model.Id);
+
+                        xdoc.Element("settings").Add(_measurepoint = new XElement("measurePoint",  // Блок "точка учета" в XML файле       
+                            new XElement("syncNumber", measurepointNumber), // Блок "номер точки учета" в XML файле
+                            new XElement("title", points.FullTitle), // Блок "наименование точки учета" в XML файле
+                            new XElement("address", points.Address), // Блок "Адрес точки учета" в XML файле
+                            new XElement("systemType", points.SystemType.GetHashCode()), // Блок "Тип точки учета" в XML файле
+                            _isDoublePipeHotWaterSystem = new XElement("isDoublePipeHotWaterSystem"), // Блок "определяем инженерную систему для ГВС" в XML файле 
+                            new XElement("counterId", points.Id), // Блок "номер по порядку точки учета" в XML файле
+                            new XElement("counterModel", points.Device.Model.Id), // Блок "ID оборудования точки учета" в XML файле
+                            new XElement("counterSerialNumber", serial), // Блок "серийный номер оборудования точки учета" в XML файле
+                            new XElement("networkAddress", points.Device.NetworkAddress), // Блок "сетевой адрес устройства точки учета" в XML файле
+                            new XElement("password", points.Device.Password), // Блок "пароль для доступа к устройству точки учета" в XML файле
+                            new XElement("protocolId", 0),  // Блок "протокол передачи данных устройства точки учета" в XML файле
+                            new XElement("adapterModel", 0), // Блок "модель адаптера устройства точки учета" в XML файле
+                            new XElement("adapterAddress", points.Device.PollSettings.AdapterAddress), // Блок "адрес адаптера устройства точки учета" в XML файле
+                            _portSpeed = new XElement("portSpeed"), // Блок "скорость порта опроса оборудования" в XML файле
+                            new XElement("flowControl", equipmentModel.DataInterface.SupportedFlowControls.GetHashCode()), // Блок "вид управления потоком при обмене данными через COM-порт устройства точки учета" в XML файле
+                            heatLeadIn = new XElement("heatLeadIn", 1) // Блок "Номер теплового ввода точки учета" в XML, если пустое значение - Ставим по умолчанию "1"
+                         ));
+
+                        //Значение, определяющее, что эта точка учета имеет инженерную систему двухтрубного ГВС
+                        if (points.IsDoublePipeHotWaterSystem)
+                            _isDoublePipeHotWaterSystem.Value = "true";
+                        else _isDoublePipeHotWaterSystem.Value = "false";
+
+                        //В моем случае - скорость порта на ВКТ настроена на 19200 
+                        if (points.Device.Model.Id == DeviceModel.Vkt9.GetHashCode())
+                            _portSpeed.Value = "19200";
+                        else _portSpeed.Value = "9600";
+
+                        // Объявляем экземпляр оборудования
+                        Equipment equipment = await lersServer.Equipment.GetByIdAsync(points.Device.Id, EquipmentInfo.Bindings);
+
+                        if (points.SystemType != SystemType.Electricity) // Электичество не поддерживает связь точки учета с устройством
+                        {
+                            //Связь точки учета с устройством
+                            try
+                            {
+                                DeviceChannel[] deviceChannelCollection = equipment.Bindings.Channels;
+                                foreach (DeviceChannel deviceChannel in deviceChannelCollection)
+                                {
+                                    //Проверяем чтобы номер точки учета совпадал  
+                                    int? channelNumber = deviceChannel.MeasurePoint.Number;
+                                    if (measurepointNumber == channelNumber)
                                     {
-                                        _supplyChannel = deviceChannel.ChannelNumber.ToString();
-                                        _returnChannel = "0";
-                                        _measurepoint.Add(new XElement("supplyChannel", _supplyChannel), // Блок "подающая магистраль точки учета" в XML файле
-                                            new XElement("returnChannel", _returnChannel)); // Блок "обратная магистраль точки учета" в XML файле
-                                    }
-                                    //Записываем значения для обратной магистрали 
-                                    else
-                                    {
-                                        _returnChannel = deviceChannel.ChannelNumber.ToString();
-                                        _measurepoint.SetElementValue("returnChannel", _returnChannel);
+                                        // Блок "Номер теплового ввода точки учета" в XML файле
+                                        //_heatLeadIn = deviceChannel.HeatLeadIn.ToString();
+                                        _heatLeadIn = deviceChannel.HeatLeadIn.ToString();
+                                        heatLeadIn.Value = _heatLeadIn;
+
+                                        //Записываем значения для подающей магистрали 
+                                        if (deviceChannel.IsSupply)
+                                        {
+                                            _supplyChannel = deviceChannel.ChannelNumber.ToString();
+                                            _returnChannel = "0";
+                                            _measurepoint.Add(new XElement("supplyChannel", _supplyChannel), // Блок "подающая магистраль точки учета" в XML файле
+                                                new XElement("returnChannel", _returnChannel)); // Блок "обратная магистраль точки учета" в XML файле
+                                        }
+                                        //Записываем значения для обратной магистрали 
+                                        else
+                                        {
+                                            _returnChannel = deviceChannel.ChannelNumber.ToString();
+                                            _measurepoint.SetElementValue("returnChannel", _returnChannel);
+                                        }
                                     }
                                 }
                             }
-                        }
-                        catch { }
+                            catch { }
 
-                        // Блок "Ячейки"
-                        try
-                        {
-                            DeviceCell[] cellsCollection = equipment.Bindings.Cells;
-                            foreach (DeviceCell cells in cellsCollection)
+                            // Блок "Ячейки"
+                            try
                             {
-                                int? cellNumber = cells.MeasurePoint.Number;
-                                //Привязка ячейки устройства к параметру точки учета
-                                if (measurepointNumber == cellNumber)
+                                DeviceCell[] cellsCollection = equipment.Bindings.Cells;
+                                foreach (DeviceCell cells in cellsCollection)
                                 {
-                                    // Блок "Описание ячейки данных устройства точки учета" в XML файле
-                                    _measurepoint.Add(
-                                        new XElement("cell", // Блок "Описание ячейки данных устройства точки учета" в XML файле
-                                            new XElement("parameterId", cells.DataParameter.GetHashCode()),  // Блок "Параметр данных точки учета, данные по которому считываются из этой ячейки устройства" в XML файле
-                                            new XElement("dataType", 0),
-                                            new XElement("cellId", cells.Cell.Id), // Блок "ID ячейки данных точки учета" в XML файле
-                                            new XElement("unit", cells.Unit.GetHashCode()), // Блок "Единица измерения данных в ячейке точки учета" в XML файле
-                                            new XElement("pulseRatio", 1) // Блок "Вес импульса точки учета" в XML файле. В связи с выходом версии R22.05 - данный параметр не используется
-                                            ));
+                                    int? cellNumber = cells.MeasurePoint.Number;
+                                    //Привязка ячейки устройства к параметру точки учета
+                                    if (measurepointNumber == cellNumber)
+                                    {
+                                        // Блок "Описание ячейки данных устройства точки учета" в XML файле
+                                        _measurepoint.Add(
+                                            new XElement("cell", // Блок "Описание ячейки данных устройства точки учета" в XML файле
+                                                new XElement("parameterId", cells.DataParameter.GetHashCode()),  // Блок "Параметр данных точки учета, данные по которому считываются из этой ячейки устройства" в XML файле
+                                                new XElement("dataType", 0),
+                                                new XElement("cellId", cells.Cell.Id), // Блок "ID ячейки данных точки учета" в XML файле
+                                                new XElement("unit", cells.Unit.GetHashCode()), // Блок "Единица измерения данных в ячейке точки учета" в XML файле
+                                                new XElement("pulseRatio", 1) // Блок "Вес импульса точки учета" в XML файле. В связи с выходом версии R22.05 - данный параметр не используется
+                                                ));
+                                    }
                                 }
                             }
+                            catch { }
                         }
-                        catch { }
-                    }
-                    else
-                    {
-                        heatLeadIn.Value = "0";
-                        _measurepoint.Add(new XElement("supplyChannel", 0), // Блок "подающая магистраль точки учета" в XML файле
-                                       new XElement("returnChannel", 0)); // Блок "обратная магистраль точки учета" в XML файле
+                        else
+                        {
+                            heatLeadIn.Value = "0";
+                            _measurepoint.Add(new XElement("supplyChannel", 0), // Блок "подающая магистраль точки учета" в XML файле
+                                           new XElement("returnChannel", 0)); // Блок "обратная магистраль точки учета" в XML файле
 
+                        }
+                        // Блок "Задержка ответа устройства точки учета (в миллисекундах)" в XML файле
+                        _measurepoint.Add(new XElement("responseDelay", points.Device.PollSettings.ResponseDelay));
                     }
-                    // Блок "Задержка ответа устройства точки учета (в миллисекундах)" в XML файле
-                    _measurepoint.Add(new XElement("responseDelay", points.Device.PollSettings.ResponseDelay));
                 }
+            }
+            catch (RequestDisconnectException disconnect)
+            {
+                MessageBox.Show(disconnect.Message, "Соединение с сервером разорвано", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                tbLogin.Select();
+                return;
             }
             #endregion
 
@@ -319,12 +344,13 @@ namespace MeasurePointsExportPultLINQ
             TimeSpan timeSpan = dateTimeEnd - dateTimeStart;
             int minute = timeSpan.Minutes;
             int seconds = timeSpan.Seconds;
+            int milliseconds = timeSpan.Milliseconds;
 
             //Останавливаем прогрессбар
             waitProgressBar.Style = ProgressBarStyle.Continuous;
 
             //Выводим сообщение об удачном завершении 
-            MessageBox.Show(String.Format("Создание конфигурационного файла прошло успешно. \nВремя выполнения: {0} мин. {1} сек.", minute, seconds), "Экспорт точек учета", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(string.Format("Создание конфигурационного файла прошло успешно. \nВремя выполнения: {0} мин. {1} сек. {2} мс", minute, seconds, milliseconds), "Экспорт точек учета", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             // Восстанавливаем по умолчанию все элементы
             tbLogin.Text = "";
@@ -339,6 +365,5 @@ namespace MeasurePointsExportPultLINQ
             //Отключаемся от сервера через 2 секунды
             lersServer.Disconnect(2000);
         }
-
     }
 }
