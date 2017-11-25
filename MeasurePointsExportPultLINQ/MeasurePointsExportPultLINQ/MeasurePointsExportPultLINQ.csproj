@@ -46,8 +46,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Resources\Lers.System.dll</HintPath>
     </Reference>
-    <Reference Include="Lers.Utils, Version=1.0.0.0, Culture=neutral, PublicKeyToken=e7c6d6299713498c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Lers.Utils">
       <HintPath>Resources\Lers.Utils.dll</HintPath>
     </Reference>
     <Reference Include="System" />
