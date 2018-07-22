@@ -1,8 +1,14 @@
-D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\bin\Release\MeasurePointsExportPultLINQ.exe.config
 D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\bin\Release\MeasurePointsExportPultLINQ.exe
-D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\bin\Release\MeasurePointsExportPultLINQ.pdb
+D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\bin\Release\MeasurePointsExportPultLINQ.exe.config
 D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\bin\Release\Lers.Core.dll
 D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\bin\Release\Lers.System.dll
+D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\bin\Release\Lers.Utils.dll
+D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\bin\Release\Lers.Serialization.dll
+D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\bin\Release\Google.Protobuf.dll
+D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\bin\Release\Lers.Proto.dll
+D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\bin\Release\Lers.Security.dll
+D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\bin\Release\Lers.Serialization.xml
+D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\bin\Release\Lers.Proto.xml
 D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\obj\Release\MeasurePointsExportPultLINQ.csprojResolveAssemblyReference.cache
 D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\obj\Release\MeasurePointsExportPultLINQ.AboutForm.resources
 D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\obj\Release\MeasurePointsExportPultLINQ.ChangeServer.resources
@@ -12,4 +18,3 @@ D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsE
 D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\obj\Release\MeasurePointsExportPultLINQ.csproj.GenerateResource.Cache
 D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\obj\Release\MeasurePointsExportPultLINQ.exe
 D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\obj\Release\MeasurePointsExportPultLINQ.pdb
-D:\Проект АТЛАС\lers-uchet\MeasurePointsExportPultLINQ\MeasurePointsExportPultLINQ\bin\Release\Lers.Utils.dll

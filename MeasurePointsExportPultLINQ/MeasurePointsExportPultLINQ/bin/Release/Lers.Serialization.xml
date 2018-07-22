@@ -1,0 +1,2493 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Lers.Serialization</name>
+    </assembly>
+    <members>
+        <member name="T:SimmoTech.Utils.Serialization.AdoNetHelper">
+            <summary>
+            Contains static helper methods for ADO.Net objects including Fast Serialization
+            </summary>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.AdoNetHelper.SerializeTypedDataTable(System.Data.DataTable)">
+            <summary>
+            Serializes a Typed DataTable to a byte[] containing only the data
+            (ie no infrastructure)
+            
+            The DataTable must be Typed and not a plain DataTable. It must also not have had any 
+            new columns added to it. In either of these cases, use SerializeDataTable instead.
+            </summary>
+            <param name="dataTable">The Typed DataTable to serialize.</param>
+            <returns>A byte[] containing the serialized data.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.AdoNetHelper.SerializeTypedDataSet(System.Data.DataSet)">
+            <summary>
+            Serializes a Typed DataSet to a byte[] containing only the data for each DataTable
+            (ie no infrastructure)
+            
+            The DataSet must be Typed and not a plain DataSet. It must also not have had any 
+            new columns/tables added to it. In either of these cases, use SerializeDataSet instead.
+            </summary>
+            <param name="dataSet">The Typed DataSet to serialize.</param>
+            <returns>A byte[] containing the serialized data.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.AdoNetHelper.SerializeDataSet(System.Data.DataSet)">
+            <summary>
+            Serializes a DataSet to a byte[].
+            </summary>
+            <param name="dataSet">The DataSet to serialize.</param>
+            <returns>A byte[] containing the serialized data.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.AdoNetHelper.SerializeDataTable(System.Data.DataTable)">
+            <summary>
+            Serializes a DataTable to a byte[].
+            </summary>
+            <param name="dataTable">The DataTable to serialize.</param>
+            <returns>A byte[] containing the serialized data.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.AdoNetHelper.SerializeSimpleTypedDataTable(System.Data.DataTable)">
+            <summary>
+            Serializes a simple Typed DataTable to a byte[] containing only data.
+            
+            A simple Typed DataTable will have no Errors associated with the rows
+            or columns and all rows should be Unchanged/Added (deserialized
+            rows will always be Unchanged).  Deleted rows will throw an exception.
+            Designed for read-only tables which need to be serialized to a minumum size.
+            
+            </summary>
+            <param name="dataTable">The Typed DataTable to serialize.</param>
+            <returns>A byte[] containing the serialized data.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.AdoNetHelper.DeserializeTypedDataSet(System.Type,System.Byte[])">
+            <summary>
+            Deserializes a Typed DataSet from a byte[] containing serialized data only.
+            
+            The Type must match that from which the serialized data was originally obtained
+            and it must have a parameterless constructor.
+            </summary>
+            <param name="dataSetType">The Type of Typed DataSet to deserialize.</param>
+            <param name="serializedData">A byte[] containing the serialized data.</param>
+            <returns>A new DataSet of the requested type.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.AdoNetHelper.DeserializeTypedDataSet(System.Data.DataSet,System.Byte[])">
+            <summary>
+            Deserializes a Typed DataSet from a byte[] containing serialized data only.
+            
+            The DataSet must be of the same type from which the serialized data was originally obtained.
+            </summary>
+            <param name="dataSet">The Typed DataSet to deserialize into.</param>
+            <param name="serializedData">A byte[] containing the serialized data.</param>
+            <returns>The same DataSet passed in.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.AdoNetHelper.DeserializeTypedDataTable(System.Type,System.Byte[])">
+            <summary>
+            Deserializes a Typed DataTable from a byte[] containing serialized data only.
+            
+            The Type must match that from which the serialized data was originally obtained
+            and it must have a parameterless constructor.
+            </summary>
+            <param name="dataTableType">The Type of Typed DataTable to deserialize.</param>
+            <param name="serializedData">A byte[] containing the serialized data.</param>
+            <returns>A new DataTable of the requested type.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.AdoNetHelper.DeserializeTypedDataTable(System.Data.DataTable,System.Byte[])">
+            <summary>
+            Deserializes a Typed DataTable from a byte[] containing serialized data only.
+            
+            The DataTable must be of the same type from which the serialized data was originally obtained.
+            </summary>
+            <param name="dataTable">The Typed DataTable to deserialize into.</param>
+            <param name="serializedData">A byte[] containing the serialized data.</param>
+            <returns>The same DataTable passed in.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.AdoNetHelper.DeserializeDataSet(System.Type,System.Byte[])">
+            <summary>
+            Deserializes a DataSet or Typed DataSet from a byte[].
+            
+            The Type must match that from which the serialized data was originally obtained
+            and it must have a parameterless constructor.
+            </summary>
+            <param name="dataSetType">The Type of DataSet to deserialize.</param>
+            <param name="serializedData">A byte[] containing the serialized data.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.AdoNetHelper.DeserializeDataSet(System.Byte[])">
+            <summary>
+            Creates a new DataSet and populates it from originally serialized data.
+            </summary>
+            <param name="serializedData">A byte[] containing the serialized data.</param>
+            <returns>A new and populated DataSet.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.AdoNetHelper.DeserializeDataSet(System.Data.DataSet,System.Byte[])">
+            <summary>
+            Deserializes data and infrastructure into the supplied DataSet.
+            </summary>
+            <param name="dataSet">The DataSet to populate.</param>
+            <param name="serializedData">A byte[] containing the serialized data.</param>
+            <returns>The same DataSet passed in.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.AdoNetHelper.DeserializeDataTable(System.Byte[])">
+            <summary>
+            Creates a new DataTable and populates it with previously serialized data.
+            </summary>
+            <param name="serializedData">A byte[] containing the serialized data.</param>
+            <returns>A new and populated DataTable</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.AdoNetHelper.DeserializeDataTable(System.Data.DataTable,System.Byte[])">
+            <summary>
+            Populates the supplied DataTable with previously serialized data.
+            </summary>
+            <param name="dataTable">The DataTable to populate.</param>
+            <param name="serializedData">A byte[] containing the serialized data.</param>
+            <returns>The same DataTable passed in.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.AdoNetHelper.DeserializeSimpleTypedDataTable(System.Data.DataTable,System.Byte[])">
+            <summary>
+            Populates an existing Typed DataTable with row data previously serialized using
+            SerializeSimpleTypedDataTable.
+            
+            All rows will have Unchanged state even if they were Added or Modified at
+            the time of serialization.
+            </summary>
+            <param name="dataTable">The DataTable into which to deserialize row data.</param>
+            <param name="serializedData">A byte[] containing the serialized data.</param>
+            <returns>The same DataTable passed in.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.AdoNetHelper.DeserializeSimpleTypedDataTable(System.Type,System.Byte[])">
+            <summary>
+            Create a new DataTable of the requested type and populates it with row data previously
+            serialized using SerializeSimpleDataTable.
+            
+            The type must have a parameterless constuctor and should be of the same type as
+            previously serialized.
+            
+            All rows will have Unchanged state even if they were Added or Modified at
+            the time of serialization.
+            </summary>
+            <param name="dataTableType">The Type of DataTable to create.</param>
+            <param name="serializedData">A byte[] containing the serialized data.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.AdoNetHelper.GetValuesFromRowVersion(System.Data.DataRow,System.Data.DataRowVersion)">
+            <summary>
+            Returns an object[] of all the row values for the specified version
+            </summary>
+            <param name="row">The row from which to extract values</param>
+            <param name="version"></param>
+            <returns>An object[] holding the values.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.AdoNetHelper.GetNullableDateTime(System.DateTime)">
+            <summary>
+            Maps DateTime.MinValue to DBNull.Value.
+            </summary>
+            <param name="value">The DateTime value to check.</param>
+            <returns>DBNull.Value if the DateTime is MinValue; otherwise the DateTime value.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.AdoNetHelper.GetKeyValuesFromRow(System.Data.DataRow)">
+            <summary>
+            Gets an object[] holding the PrimaryKey column values.
+            The Row must be in a DataTable.
+            </summary>
+            <param name="row">The row from which to find values.</param>
+            <returns>An object[] holding the PrimaryKey values for the row, or an empty object[] if there is no PrimaryKey defined.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.AdoNetHelper.GetKeyValuesFromRow(System.Data.DataRow,System.Data.DataTable)">
+            <summary>
+            Gets an object[] holding the values from the columns having the same names as those of the PrimaryKey columns
+            from the supplied DataTable.
+            </summary>
+            <param name="row">The row from which to find values.</param>
+            <param name="primaryKeyProvider">The DataTable holding the PrimaryKey columns.</param>
+            <returns>An object[] holding the corresponding values for the row, or an empty object[] if there is no PrimaryKey defined.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.AdoNetHelper.GetUniqueColumnValues(System.Data.DataRow[],System.String)">
+            <summary>
+            Gets a list of unique values for a column from a list of rows.
+            </summary>
+            <param name="rows">The DataRows in which to look for unique values.</param>
+            <param name="columnName">The name of the column in which to look for unique values.</param>
+            <returns>An ArrayList containing the unique values.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.AdoNetHelper.GetUniqueColumnValues(System.Data.DataRow[],System.Int32)">
+            <summary>
+            Gets a list of unique values for a column from a list of rows.
+            </summary>
+            <param name="rows">The DataRows in which to look for unique values.</param>
+            <param name="columnOrdinal">The ordinal of the column in which to look for unique values.</param>
+            <returns>An ArrayList containing the unique values.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.AdoNetHelper.GetUniqueColumnValues(System.Data.DataRow[],System.Data.DataColumn)">
+            <summary>
+            Gets a list of unique values for a column from a list of rows.
+            </summary>
+            <param name="rows">The DataRows in which to look for unique values.</param>
+            <param name="column">The column in which to look for unique values.</param>
+            <returns>An ArrayList containing the unique values.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.AdoNetHelper.GetDataSetDump(System.Data.DataSet,System.String)">
+            <summary>
+            Create a simple string dump of the contents (each table) of a DataSet.
+            
+            Includes the key values for each row.
+            </summary>
+            <param name="dataset">The DataSet to dump</param>
+            <param name="description">A description of the DataSet contents</param>
+            <returns></returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.AdoNetHelper.GetTableDump(System.Data.DataTable,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="dataTable"></param>
+            <param name="description"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SimmoTech.Utils.Serialization.IModifiedTypedDataSet">
+            <summary>
+            Marker interface to signify that although the item is a Typed DataSet, it
+            should be serialized as a plain DataSet since additional tables or columns
+            may have been added to its schema
+            </summary>
+        </member>
+        <member name="T:SimmoTech.Utils.Serialization.SerializationWriter">
+             <summary>
+             A SerializationWriter instance is used to store values and objects in a byte array.
+            
+             Once an instance is created, use the various methods to store the required data.
+             ToArray() will return a byte[] containing all of the data required for deserialization.
+             This can be stored in the SerializationInfo parameter in an ISerializable.GetObjectData() method.
+             <para/>
+             As an alternative to ToArray(), if you want to apply some post-processing to the serialized bytes,
+             such as compression, call AppendTokenTables first to ensure that the string and object token tables
+             are appended to the stream, and then cast BaseStream to MemoryStream. You can then access the
+             MemoryStream's internal buffer as follows:
+             <para/>
+             <example><code>
+             writer.AppendTokenTables();
+             MemoryStream stream = (MemoryStream) writer.BaseStream;
+            	serializedData = MiniLZO.Compress(stream.GetBuffer(), (int) stream.Length);
+             </code></example>
+             </summary>
+        </member>
+        <member name="F:SimmoTech.Utils.Serialization.SerializationWriter.DefaultCapacity">
+            <summary>
+            Default capacity for the underlying MemoryStream
+            </summary>
+        </member>
+        <member name="F:SimmoTech.Utils.Serialization.SerializationWriter.DefaultOptimizeForSize">
+            <summary>
+            The Default setting for the OptimizeForSize property.
+            </summary>
+        </member>
+        <member name="F:SimmoTech.Utils.Serialization.SerializationWriter.DateYearMask">
+            <summary>
+            Section masks used for packing DateTime values
+            </summary>
+        </member>
+        <member name="F:SimmoTech.Utils.Serialization.SerializationWriter.IsNegativeSection">
+            <summary>
+            Section masks used for packing TimeSpan values
+            </summary>
+        </member>
+        <member name="F:SimmoTech.Utils.Serialization.SerializationWriter.HighestOptimizable32BitValue">
+            <summary>
+            Holds the highest int that can be optimized into less than the normal 4 bytes
+            </summary>
+        </member>
+        <member name="F:SimmoTech.Utils.Serialization.SerializationWriter.HighestOptimizable64BitValue">
+            <summary>
+            Holds the highest long that can be optimized into less than the normal 8 bytes
+            </summary>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.#ctor">
+            <summary>
+            Creates a FastSerializer with the Default Capacity (1kb)
+            </summary>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.#ctor(System.Int32)">
+            <summary>
+            Creates a FastSerializer with the specified capacity
+            </summary>
+            <param name="capacity"></param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.#ctor(System.IO.Stream)">
+            <summary>
+            Creates a FastSerializer around the specified stream
+            Note: The stream must be seekable in this version to allow the token table
+            offset to be written on completion
+            </summary>
+            <param name="stream">The seekable stream in which to store data</param>
+        </member>
+        <member name="P:SimmoTech.Utils.Serialization.SerializationWriter.OptimizeForSize">
+            <summary>
+            Gets or Sets a boolean flag to indicate whether to optimize for size (default)
+            by storing data as packed bits or sections where possible.
+            Setting this value to false will turn off this optimization and store
+            data directly which increases the speed.
+            Note: This only affects optimization of data passed to the WriteObject method
+            and direct calls to the WriteOptimized methods will always pack data into
+            the smallest space where possible.
+            </summary>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.Write(System.Collections.ArrayList)">
+            <summary>
+            Writes an ArrayList into the stream using the fewest number of bytes possible.
+            Stored Size: 1 byte upwards depending on data content
+            Notes:
+            A null Arraylist takes 1 byte.
+            An empty ArrayList takes 2 bytes.
+            The contents are stored using WriteOptimized(ArrayList) which should be used
+            if the ArrayList is guaranteed never to be null.
+            </summary>
+            <param name="value">The ArrayList to store.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.Write(System.Collections.BitArray)">
+            <summary>
+            Writes a BitArray value into the stream using the fewest number of bytes possible.
+            Stored Size: 1 byte upwards depending on data content
+            Notes:
+            A null BitArray takes 1 byte.
+            An empty BitArray takes 2 bytes.
+            </summary>
+            <param name="value">The BitArray value to store.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.Write(System.Collections.Specialized.BitVector32)">
+            <summary>
+            Writes a BitVector32 into the stream.
+            Stored Size: 4 bytes.
+            </summary>
+            <param name="value">The BitVector32 to store.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.Write(System.DateTime)">
+            <summary>
+            Writes a DateTime value into the stream.
+            Stored Size: 8 bytes
+            </summary>
+            <param name="value">The DateTime value to store.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.Write(System.Guid)">
+            <summary>
+            Writes a Guid into the stream.
+            Stored Size: 16 bytes.
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.Write(System.Data.DataTable)">
+            <summary>
+            Writes a DataTable into the stream.
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.Write(System.Data.DataSet)">
+            <summary>
+            Writes a DataSet into the stream.
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.Write(SimmoTech.Utils.Serialization.IOwnedDataSerializable,System.Object)">
+            <summary>
+            Allows any object implementing IOwnedDataSerializable to serialize itself
+            into this SerializationWriter.
+            A context may also be used to give the object an indication of what data
+            to store. As an example, using a BitVector32 gives a list of flags and
+            the object can conditionally store data depending on those flags.
+            </summary>
+            <param name="target">The IOwnedDataSerializable object to ask for owned data</param>
+            <param name="context">An arbtritrary object but BitVector32 recommended</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.WriteObject(System.Object)">
+             <summary>
+             Stores an object into the stream using the fewest number of bytes possible.
+             Stored Size: 1 byte upwards depending on type and/or content.
+            
+             1 byte: null, DBNull.Value, Boolean
+            
+             1 to 2 bytes: Int16, UInt16, Byte, SByte, Char,
+            
+             1 to 4 bytes: Int32, UInt32, Single, BitVector32
+            
+             1 to 8 bytes: DateTime, TimeSpan, Double, Int64, UInt64
+            
+             1 or 16 bytes: Guid
+            
+             1 plus content: string, object[], byte[], char[], BitArray, Type, ArrayList
+            
+             Any other object be stored using a .Net Binary formatter but this should
+             only be allowed as a last resort:
+             Since this is effectively a different serialization session, there is a
+             possibility of the same shared object being serialized twice or, if the
+             object has a reference directly or indirectly back to the parent object,
+             there is a risk of looping which will throw an exception.
+            
+             The type of object is checked with the most common types being checked first.
+             Each 'section' can be reordered to provide optimum speed but the check for
+             null should always be first and the default serialization always last.
+            
+             Once the type is identified, a SerializedType byte is stored in the stream
+             followed by the data for the object (certain types/values may not require
+             storage of data as the SerializedType may imply the value).
+            
+             For certain objects, if the value is within a certain range then optimized
+             storage may be used. If the value doesn't meet the required optimization
+             criteria then the value is stored directly.
+             The checks for optimization may be disabled by setting the OptimizeForSize
+             property to false in which case the value is stored directly. This could
+             result in a slightly larger stream but there will be a speed increate to
+             compensate.
+             </summary>
+             <param name="value">The object to store.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.Write(System.String)">
+            <summary>
+            Calls WriteOptimized(string).
+            This override to hide base BinaryWriter.Write(string).
+            </summary>
+            <param name="value">The string to store.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.Write(System.TimeSpan)">
+            <summary>
+            Writes a TimeSpan value into the stream.
+            Stored Size: 8 bytes
+            </summary>
+            <param name="value">The TimeSpan value to store.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.Write(System.Type,System.Boolean)">
+            <summary>
+            Stores a Type object into the stream.
+            Stored Size: Depends on the length of the Type's name and whether the fullyQualified parameter is set.
+            A null Type takes 1 byte.
+            </summary>
+            <param name="value">The Type to store.</param>
+            <param name="fullyQualified">true to store the AssemblyQualifiedName or false to store the FullName. </param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.WriteOptimized(System.Collections.ArrayList)">
+            <summary>
+            Writes an non-null ArrayList into the stream using the fewest number of bytes possible.
+            Stored Size: 1 byte upwards depending on data content
+            Notes:
+            An empty ArrayList takes 1 byte.
+            </summary>
+            <param name="value">The ArrayList to store. Must not be null.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.WriteOptimized(System.Collections.BitArray)">
+            <summary>
+            Writes a BitArray into the stream using the fewest number of bytes possible.
+            Stored Size: 1 byte upwards depending on data content
+            Notes:
+            An empty BitArray takes 1 byte.
+            </summary>
+            <param name="value">The BitArray value to store. Must not be null.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.WriteOptimized(System.Collections.Specialized.BitVector32)">
+             <summary>
+             Writes a BitVector32 into the stream using the fewest number of bytes possible.
+             Stored Size: 1 to 4 bytes. (.Net is 4 bytes)
+              1 to  7 bits takes 1 byte
+              8 to 14 bits takes 2 bytes
+             15 to 21 bits takes 3 bytes
+             22 to 28 bits takes 4 bytes
+             -------------------------------------------------------------------
+             29 to 32 bits takes 5 bytes - use Write(BitVector32) method instead
+            
+             Try to order the BitVector32 masks so that the highest bits are least-likely
+             to be set.
+             </summary>
+             <param name="value">The BitVector32 to store. Must not use more than 28 bits.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.WriteOptimized(System.DateTime)">
+            <summary>
+            Writes a DateTime value into the stream using the fewest number of bytes possible.
+            Stored Size: 3 bytes to 7 bytes (.Net is 8 bytes)
+            Notes:
+            A DateTime containing only a date takes 3 bytes
+            (except a .NET 2.0 Date with a specified DateTimeKind which will take a minimum
+            of 5 bytes - no further optimization for this situation felt necessary since it
+            is unlikely that a DateTimeKind would be specified without hh:mm also)
+            Date plus hh:mm takes 5 bytes.
+            Date plus hh:mm:ss takes 6 bytes.
+            Date plus hh:mm:ss.fff takes 7 bytes.
+            </summary>
+            <param name="value">The DateTime value to store. Must not contain sub-millisecond data.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.WriteOptimized(System.Decimal)">
+            <summary>
+            Writes a Decimal value into the stream using the fewest number of bytes possible.
+            Stored Size: 1 byte to 14 bytes (.Net is 16 bytes)
+            Restrictions: None
+            </summary>
+            <param name="value">The Decimal value to store</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.WriteOptimized(System.Int32)">
+             <summary>
+             Write an Int32 value using the fewest number of bytes possible.
+             <para/>
+             Only call this method if the value is known to be between 0 and
+             268,435,455 otherwise use Write(Int32 value)
+             </summary>
+             <remarks>
+             0x00000000 - 0x0000007f (0 to 127) takes 1 byte
+             0x00000080 - 0x000003FF (128 to 16,383) takes 2 bytes
+             0x00000400 - 0x001FFFFF (16,384 to 2,097,151) takes 3 bytes
+             0x00200000 - 0x0FFFFFFF (2,097,152 to 268,435,455) takes 4 bytes
+             ----------------------------------------------------------------
+             0x10000000 - 0x07FFFFFF (268,435,456 and above) takes 5 bytes
+             All negative numbers take 5 bytes
+            
+             Only call this method if the value is known to be between 0 and
+             268,435,455 otherwise use Write(Int32 value)
+             </remarks>
+             <param name="value">The Int32 to store. Must be between 0 and 268,435,455 inclusive.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.WriteOptimized(System.Int64)">
+             <summary>
+             Write an Int64 value using the fewest number of bytes possible.
+             0x0000000000000000 - 0x000000000000007f (0 to 127) takes 1 byte
+             0x0000000000000080 - 0x00000000000003FF (128 to 16,383) takes 2 bytes
+             0x0000000000000400 - 0x00000000001FFFFF (16,384 to 2,097,151) takes 3 bytes
+             0x0000000000200000 - 0x000000000FFFFFFF (2,097,152 to 268,435,455) takes 4 bytes
+             0x0000000010000000 - 0x00000007FFFFFFFF (268,435,456 to 34,359,738,367) takes 5 bytes
+             0x0000000800000000 - 0x000003FFFFFFFFFF (34,359,738,368 to 4,398,046,511,103) takes 6 bytes
+             0x0000040000000000 - 0x0001FFFFFFFFFFFF (4,398,046,511,104 to 562,949,953,421,311) takes 7 bytes
+             0x0002000000000000 - 0x00FFFFFFFFFFFFFF (562,949,953,421,312 to 72,057,594,037,927,935) takes 8 bytes
+             ------------------------------------------------------------------
+             0x0100000000000000 - 0x7FFFFFFFFFFFFFFF (72,057,594,037,927,936 to 9,223,372,036,854,775,807) takes 9 bytes
+             0x7FFFFFFFFFFFFFFF - 0xFFFFFFFFFFFFFFFF (9,223,372,036,854,775,807 and above) takes 10 bytes
+             All negative numbers take 10 bytes
+            
+             Only call this method if the value is known to be between 0 and
+             72,057,594,037,927,935 otherwise use Write(Int64 value)
+             </summary>
+             <param name="value">The Int64 to store. Must be between 0 and 72,057,594,037,927,935 inclusive.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.WriteOptimized(System.String)">
+             <summary>
+             Writes a string value into the stream using the fewest number of bytes possible.
+             Stored Size: 1 byte upwards depending on string length
+             Notes:
+             Encodes null, Empty, 'Y', 'N', ' ' values as a single byte
+             Any other single char string is stored as two bytes
+             All other strings are stored in a string token list:
+            
+             The TypeCode representing the current string token list is written first (1 byte),
+             followed by the string token itself (1-4 bytes)
+            
+             When the current string list has reached 128 values then a new string list
+             is generated and that is used for generating future string tokens. This continues
+             until the maximum number (128) of string lists is in use, after which the string
+             lists are used in a round-robin fashion.
+             By doing this, more lists are created with fewer items which allows a smaller
+             token size to be used for more strings.
+            
+             The first 16,384 strings will use a 1 byte token.
+             The next 2,097,152 strings will use a 2 byte token. (This should suffice for most uses!)
+             The next 268,435,456 strings will use a 3 byte token. (My, that is a lot!!)
+             The next 34,359,738,368 strings will use a 4 byte token. (only shown for completeness!!!)
+             </summary>
+             <param name="value">The string to store.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.WriteOptimized(System.TimeSpan)">
+            <summary>
+            Writes a TimeSpan value into the stream using the fewest number of bytes possible.
+            Stored Size: 2 bytes to 8 bytes (.Net is 8 bytes)
+            Notes:
+            hh:mm (time) are always stored together and take 2 bytes.
+            If seconds are present then 3 bytes unless (time) is not present in which case 2 bytes
+            since the seconds are stored in the minutes position.
+            If milliseconds are present then 4 bytes.
+            In addition, if days are present they will add 1 to 4 bytes to the above.
+            </summary>
+            <param name="value">The TimeSpan value to store. Must not contain sub-millisecond data.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.WriteOptimized(System.Type)">
+            <summary>
+            Stores a non-null Type object into the stream.
+            Stored Size: Depends on the length of the Type's name.
+            If the type is a System type (mscorlib) then it is stored without assembly name information,
+            otherwise the Type's AssemblyQualifiedName is used.
+            </summary>
+            <param name="value">The Type to store. Must not be null.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.WriteOptimized(System.UInt32)">
+             <summary>
+             Write a UInt32 value using the fewest number of bytes possible.
+             0x00000000 - 0x0000007f (0 to 127) takes 1 byte
+             0x00000080 - 0x000003FF (128 to 16,383) takes 2 bytes
+             0x00000400 - 0x001FFFFF (16,384 to 2,097,151) takes 3 bytes
+             0x00200000 - 0x0FFFFFFF (2,097,152 to 268,435,455) takes 4 bytes
+             ----------------------------------------------------------------
+             0x10000000 - 0xFFFFFFFF (268,435,456 and above) takes 5 bytes
+            
+             Only call this method if the value is known to  be between 0 and
+             268,435,455 otherwise use Write(UInt32 value)
+             </summary>
+             <param name="value">The UInt32 to store. Must be between 0 and 268,435,455 inclusive.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.WriteOptimized(System.UInt64)">
+             <summary>
+             Write a UInt64 value using the fewest number of bytes possible.
+             0x0000000000000000 - 0x000000000000007f (0 to 127) takes 1 byte
+             0x0000000000000080 - 0x00000000000003FF (128 to 16,383) takes 2 bytes
+             0x0000000000000400 - 0x00000000001FFFFF (16,384 to 2,097,151) takes 3 bytes
+             0x0000000000200000 - 0x000000000FFFFFFF (2,097,152 to 268,435,455) takes 4 bytes
+             0x0000000010000000 - 0x00000007FFFFFFFF (268,435,456 to 34,359,738,367) takes 5 bytes
+             0x0000000800000000 - 0x000003FFFFFFFFFF (34,359,738,368 to 4,398,046,511,103) takes 6 bytes
+             0x0000040000000000 - 0x0001FFFFFFFFFFFF (4,398,046,511,104 to 562,949,953,421,311) takes 7 bytes
+             0x0002000000000000 - 0x00FFFFFFFFFFFFFF (562,949,953,421,312 to 72,057,594,037,927,935) takes 8 bytes
+             ------------------------------------------------------------------
+             0x0100000000000000 - 0x7FFFFFFFFFFFFFFF (72,057,594,037,927,936 to 9,223,372,036,854,775,807) takes 9 bytes
+             0x7FFFFFFFFFFFFFFF - 0xFFFFFFFFFFFFFFFF (9,223,372,036,854,775,807 and above) takes 10 bytes
+            
+             Only call this method if the value is known to be between 0 and
+             72,057,594,037,927,935 otherwise use Write(UInt64 value)
+             </summary>
+             <param name="value">The UInt64 to store. Must be between 0 and 72,057,594,037,927,935 inclusive.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.Write(System.Boolean[])">
+            <summary>
+            Writes a Boolean[] into the stream.
+            Notes:
+            A null or empty array will take 1 byte.
+            Calls WriteOptimized(Boolean[]).
+            </summary>
+            <param name="values">The Boolean[] to store.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.Write(System.Byte[])">
+            <summary>
+            Writes a Byte[] into the stream.
+            Notes:
+            A null or empty array will take 1 byte.
+            </summary>
+            <param name="values">The Byte[] to store.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.Write(System.Char[])">
+            <summary>
+            Writes a Char[] into the stream.
+            Notes:
+            A null or empty array will take 1 byte.
+            </summary>
+            <param name="values">The Char[] to store.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.Write(System.DateTime[])">
+            <summary>
+            Writes a DateTime[] into the stream.
+            Notes:
+            A null or empty array will take 1 byte.
+            </summary>
+            <param name="values">The DateTime[] to store.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.Write(System.Decimal[])">
+            <summary>
+            Writes a Decimal[] into the stream.
+            Notes:
+            A null or empty array will take 1 byte.
+            Calls WriteOptimized(Decimal[]).
+            </summary>
+            <param name="values">The Decimal[] to store.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.Write(System.Double[])">
+            <summary>
+            Writes a Double[] into the stream.
+            Notes:
+            A null or empty array will take 1 byte.
+            </summary>
+            <param name="values">The Double[] to store.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.Write(System.Single[])">
+            <summary>
+            Writes a Single[] into the stream.
+            Notes:
+            A null or empty array will take 1 byte.
+            </summary>
+            <param name="values">The Single[] to store.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.Write(System.Guid[])">
+            <summary>
+            Writes a Guid[] into the stream.
+            Notes:
+            A null or empty array will take 1 byte.
+            </summary>
+            <param name="values">The Guid[] to store.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.Write(System.Int32[])">
+            <summary>
+            Writes an Int32[] into the stream.
+            Notes:
+            A null or empty array will take 1 byte.
+            </summary>
+            <param name="values">The Int32[] to store.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.Write(System.Int64[])">
+            <summary>
+            Writes an Int64[] into the stream.
+            Notes:
+            A null or empty array will take 1 byte.
+            </summary>
+            <param name="values">The Int64[] to store.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.Write(System.Object[])">
+            <summary>
+            Writes an object[] into the stream.
+            Stored Size: 2 bytes upwards depending on data content
+            Notes:
+            A null object[] takes 1 byte.
+            An empty object[] takes 2 bytes.
+            The contents of the array will be stored optimized.
+            </summary>
+            <param name="values">The object[] to store.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.Write(System.SByte[])">
+            <summary>
+            Writes an SByte[] into the stream.
+            Notes:
+            A null or empty array will take 1 byte.
+            </summary>
+            <param name="values">The SByte[] to store.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.Write(System.Int16[])">
+            <summary>
+            Writes an Int16[]or a null into the stream.
+            Notes:
+            A null or empty array will take 1 byte.
+            Calls WriteOptimized(decimal[]).
+            </summary>
+            <param name="values">The Int16[] to store.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.Write(System.TimeSpan[])">
+            <summary>
+            Writes a TimeSpan[] into the stream.
+            Notes:
+            A null or empty array will take 1 byte.
+            </summary>
+            <param name="values">The TimeSpan[] to store.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.Write(System.UInt32[])">
+            <summary>
+            Writes a UInt32[] into the stream.
+            Notes:
+            A null or empty array will take 1 byte.
+            </summary>
+            <param name="values">The UInt32[] to store.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.Write(System.UInt64[])">
+            <summary>
+            Writes a UInt64[] into the stream.
+            Notes:
+            A null or empty array will take 1 byte.
+            </summary>
+            <param name="values">The UInt64[] to store.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.Write(System.UInt16[])">
+            <summary>
+            Writes a UInt16[] into the stream.
+            Notes:
+            A null or empty array will take 1 byte.
+            </summary>
+            <param name="values">The UInt16[] to store.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.WriteOptimized(System.Boolean[])">
+            <summary>
+            Writes an optimized Boolean[] into the stream using the fewest possible bytes.
+            Notes:
+            A null or empty array will take 1 byte.
+            Stored as a BitArray.
+            </summary>
+            <param name="values">The Boolean[] to store.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.WriteOptimized(System.DateTime[])">
+            <summary>
+            Writes a DateTime[] into the stream using the fewest possible bytes.
+            Notes:
+            A null or empty array will take 1 byte.
+            </summary>
+            <param name="values">The DateTime[] to store.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.WriteOptimized(System.Decimal[])">
+            <summary>
+            Writes a Decimal[] into the stream using the fewest possible bytes.
+            Notes:
+            A null or empty array will take 1 byte.
+            </summary>
+            <param name="values">The Decimal[] to store.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.WriteOptimized(System.Object[])">
+            <summary>
+            Writes a not-null object[] into the stream using the fewest number of bytes possible.
+            Stored Size: 2 bytes upwards depending on data content
+            Notes:
+            An empty object[] takes 1 byte.
+            The contents of the array will be stored optimized.
+            </summary>
+            <param name="values">The object[] to store. Must not be null.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.WriteOptimized(System.Object[],System.Object[])">
+            <summary>
+            Writes a pair of object[] arrays into the stream using the fewest number of bytes possible.
+            The arrays must not be null and must have the same length
+            The first array's values are written optimized
+            The second array's values are compared against the first and, where identical, will be stored
+            using a single byte.
+            Useful for storing entity data where there is a before-change and after-change set of value pairs
+            and, typically, only a few of the values will have changed.
+            </summary>
+            <param name="values1">The first object[] value which must not be null and must have the same length as values2</param>
+            <param name="values2">The second object[] value which must not be null and must have the same length as values1</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.WriteOptimized(System.Int32[])">
+            <summary>
+            Writes an Int32[] into the stream using the fewest possible bytes.
+            Notes:
+            A null or empty array will take 1 byte.
+            </summary>
+            <param name="values">The Int32[] to store.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.WriteOptimized(System.Int64[])">
+            <summary>
+            Writes an Int64[] into the stream using the fewest possible bytes.
+            Notes:
+            A null or empty array will take 1 byte.
+            </summary>
+            <param name="values">The Int64[] to store.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.WriteOptimized(System.TimeSpan[])">
+            <summary>
+            Writes a TimeSpan[] into the stream using the fewest possible bytes.
+            Notes:
+            A null or empty array will take 1 byte.
+            </summary>
+            <param name="values">The TimeSpan[] to store.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.WriteOptimized(System.UInt32[])">
+            <summary>
+            Writes a UInt32[] into the stream using the fewest possible bytes.
+            Notes:
+            A null or empty array will take 1 byte.
+            </summary>
+            <param name="values">The UInt32[] to store.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.WriteOptimized(System.UInt64[])">
+            <summary>
+            Writes a UInt64[] into the stream using the fewest possible bytes.
+            Notes:
+            A null or empty array will take 1 byte.
+            </summary>
+            <param name="values">The UInt64[] to store.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.WriteNullable(System.ValueType)">
+            <summary>
+            Writes a Nullable type into the stream.
+            Synonym for WriteObject().
+            </summary>
+            <param name="value">The Nullable value to store.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.Write``2(System.Collections.Generic.Dictionary{``0,``1})">
+            <summary>
+            Writes a non-null generic Dictionary into the stream.
+            </summary>
+            <remarks>
+            The key and value types themselves are not stored - they must be
+            supplied at deserialization time.
+            <para/>
+            An array of keys is stored followed by an array of values.
+            </remarks>
+            <typeparam name="K">The key Type.</typeparam>
+            <typeparam name="V">The value Type.</typeparam>
+            <param name="value">The generic dictionary.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.Write``1(System.Collections.Generic.List{``0})">
+            <summary>
+            Writes a non-null generic List into the stream.
+            </summary>
+            <remarks>
+            The list type itself is not stored - it must be supplied
+            at deserialization time.
+            <para/>
+            The list contents are stored as an array.
+            </remarks>
+            <typeparam name="T">The list Type.</typeparam>
+            <param name="value">The generic List.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.WriteTypedArray(System.Array)">
+            <summary>
+            Writes a null or a typed array into the stream.
+            </summary>
+            <param name="values">The array to store.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.AppendTokenTables">
+            <summary>
+            Writes the contents of the string and object token tables into the stream.
+            Also write the starting offset into the first 4 bytes of the stream.
+            Notes:
+            Called automatically by ToArray().
+            Can be used to ensure that the complete graph is written before using an
+            alternate technique of extracting a Byte[] such as using compression on
+            the underlying stream.
+            </summary>
+            <returns>The length of the string and object tables.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.ToArray">
+             <summary>
+             Returns a byte[] containing all of the serialized data.
+            
+             The current implementation has the data in 3 sections:
+             1) A 4 byte Int32 giving the offset to the 3rd section.
+             2) The main serialized data.
+             3) The serialized string tokenization lists and object
+                tokenization lists.
+            
+             Only call this method once all of the data has been serialized.
+            
+             This method appends all of the tokenized data (string and object)
+             to the end of the stream and ensures that the first four bytes
+             reflect the offset of the tokenized data so that it can be
+             deserialized first.
+             This is the reason for requiring a rewindable stream.
+            
+             Future implementations may also allow the serialized data to be
+             accessed via 2 byte[] arrays. This would remove the requirement
+             for a rewindable stream opening the possibility of streaming the
+             serialized data directly over the network allowing simultaneous
+             of partially simultaneous deserialization.
+             </summary>
+             <returns>A byte[] containing all serialized data.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.WriteBytesDirect(System.Byte[])">
+             <summary>
+             Writes a byte[] directly into the stream.
+             The size of the array is not stored so only use this method when
+             the number of bytes will be known at deserialization time.
+            
+             A null value will throw an exception
+             </summary>
+             <param name="value">The byte[] to store. Must not be null.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.WriteStringDirect(System.String)">
+            <summary>
+            Writes a non-null string directly to the stream without tokenization.
+            </summary>
+            <param name="value">The string to store. Must not be null.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.WriteTokenizedObject(System.Object)">
+             <summary>
+             Writes a token (an Int32 taking 1 to 4 bytes) into the stream that represents the object instance.
+             The same token will always be used for the same object instance.
+            
+             The object will be serialized once and recreated at deserialization time.
+             Calls to SerializationReader.ReadTokenizedObject() will retrieve the same object instance.
+            
+             </summary>
+             <param name="value">The object to tokenize. Must not be null and must not be a string.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.WriteTokenizedObject(System.Object,System.Boolean)">
+             <summary>
+             Writes a token (an Int32 taking 1 to 4 bytes) into the stream that represents the object instance.
+             The same token will always be used for the same object instance.
+            
+             When recreateFromType is set to true, the object's Type will be stored and the object recreated using
+             Activator.GetInstance with a parameterless contructor. This is useful for stateless, factory-type classes.
+            
+             When recreateFromType is set to false, the object will be serialized once and recreated at deserialization time.
+            
+             Calls to SerializationReader.ReadTokenizedObject() will retrieve the same object instance.
+             </summary>
+             <param name="value">The object to tokenize. Must not be null and must not be a string.</param>
+             <param name="recreateFromType">true if the object can be recreated using a parameterless constructor;
+             false if the object should be serialized as-is</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.encodeTimeSpan(System.TimeSpan,System.Boolean,System.Int32)">
+            <summary>
+            Encodes a TimeSpan into the fewest number of bytes.
+            Has been separated from the WriteOptimized(TimeSpan) method so that WriteOptimized(DateTime)
+            can also use this for .NET 2.0 DateTimeKind information.
+            By taking advantage of the fact that a DateTime's TimeOfDay portion will never use the IsNegative
+            and HasDays flags, we can use these 2 bits to store the DateTimeKind and, since DateTimeKind is
+            unlikely to be set without a Time, we need no additional bytes to support a .NET 2.0 DateTime.
+            </summary>
+            <param name="value">The TimeSpan to store.</param>
+            <param name="partOfDateTime">True if the TimeSpan is the TimeOfDay from a DateTime; False if a real TimeSpan.</param>
+            <param name="initialData">The intial data for the BitVector32 - contains DateTimeKind or 0</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.checkOptimizable(System.Boolean,System.String)">
+             <summary>
+             Checks whether an optimization condition has been met and throw an exception if not.
+            
+             This method has been made conditional on THROW_IF_NOT_OPTIMIZABLE being set at compile time.
+             By default, this is set if DEBUG is set but could be set explicitly if exceptions are required and
+             the evaluation overhead is acceptable.
+             If not set, then this method and all references to it are removed at compile time.
+            
+             Leave at the default for optimum usage.
+             </summary>
+             <param name="condition">An expression evaluating to true if the optimization condition is met, false otherwise.</param>
+             <param name="message">The message to include in the exception should the optimization condition not be met.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.write7bitEncodedSigned32BitValue(System.Int32)">
+             <summary>
+             Stores a 32-bit signed value into the stream using 7-bit encoding.
+            
+             The value is written 7 bits at a time (starting with the least-significant bits) until there are no more bits to write.
+             The eighth bit of each byte stored is used to indicate whether there are more bytes following this one.
+            
+             See Write(Int32) for details of the values that are optimizable.
+             </summary>
+             <param name="value">The Int32 value to encode.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.write7bitEncodedSigned64BitValue(System.Int64)">
+             <summary>
+             Stores a 64-bit signed value into the stream using 7-bit encoding.
+            
+             The value is written 7 bits at a time (starting with the least-significant bits) until there are no more bits to write.
+             The eighth bit of each byte stored is used to indicate whether there are more bytes following this one.
+            
+             See Write(Int64) for details of the values that are optimizable.
+             </summary>
+             <param name="value">The Int64 value to encode.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.write7bitEncodedUnsigned32BitValue(System.UInt32)">
+             <summary>
+             Stores a 32-bit unsigned value into the stream using 7-bit encoding.
+            
+             The value is written 7 bits at a time (starting with the least-significant bits) until there are no more bits to write.
+             The eighth bit of each byte stored is used to indicate whether there are more bytes following this one.
+            
+             See Write(UInt32) for details of the values that are optimizable.
+             </summary>
+             <param name="value">The UInt32 value to encode.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.write7bitEncodedUnsigned64BitValue(System.UInt64)">
+             <summary>
+             Stores a 64-bit unsigned value into the stream using 7-bit encoding.
+            
+             The value is written 7 bits at a time (starting with the least-significant bits) until there are no more bits to write.
+             The eighth bit of each byte stored is used to indicate whether there are more bytes following this one.
+            
+             See Write(ULong) for details of the values that are optimizable.
+             </summary>
+             <param name="value">The ULong value to encode.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.writeArray(System.Boolean[])">
+            <summary>
+            Internal implementation to store a non-null Boolean[].
+            </summary>
+            <remarks>
+            Stored as a BitArray for optimization.
+            </remarks>
+            <param name="values">The Boolean[] to store.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.writeArray(System.Byte[])">
+            <summary>
+            Internal implementation to store a non-null Byte[].
+            </summary>
+            <param name="values">The Byte[] to store.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.writeArray(System.Char[])">
+            <summary>
+            Internal implementation to store a non-null Char[].
+            </summary>
+            <param name="values">The Char[] to store.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.writeArray(System.DateTime[],System.Collections.BitArray)">
+            <summary>
+            Internal implementation to write a non, null DateTime[] using a BitArray to
+            determine which elements are optimizable.
+            </summary>
+            <param name="values">The DateTime[] to store.</param>
+            <param name="optimizeFlags">A BitArray indicating which of the elements which are optimizable;
+            a reference to constant FullyOptimizableValueArray if all the elements are optimizable; or null
+            if none of the elements are optimizable.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.writeArray(System.Decimal[])">
+            <summary>
+            Internal implementation to store a non-null Decimal[].
+            </summary>
+            <remarks>
+            All elements are stored optimized.
+            </remarks>
+            <param name="values">The Decimal[] to store.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.writeArray(System.Double[])">
+            <summary>
+            Internal implementation to store a non-null Double[].
+            </summary>
+            <param name="values">The Double[] to store.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.writeArray(System.Single[])">
+            <summary>
+            Internal implementation to store a non-null Single[].
+            </summary>
+            <param name="values">The Single[] to store.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.writeArray(System.Guid[])">
+            <summary>
+            Internal implementation to store a non-null Guid[].
+            </summary>
+            <param name="values">The Guid[] to store.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.writeArray(System.Int32[],System.Collections.BitArray)">
+            <summary>
+            Internal implementation to write a non-null Int32[] using a BitArray to determine which elements are optimizable.
+            </summary>
+            <param name="values">The Int32[] to store.</param>
+            <param name="optimizeFlags">A BitArray indicating which of the elements which are optimizable;
+            a reference to constant FullyOptimizableValueArray if all the elements are optimizable; or null
+            if none of the elements are optimizable.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.writeArray(System.Int64[],System.Collections.BitArray)">
+            <summary>
+            Internal implementation to writes a non-null Int64[] using a BitArray to determine which elements are optimizable.
+            </summary>
+            <param name="values">The Int64[] to store.</param>
+            <param name="optimizeFlags">A BitArray indicating which of the elements which are optimizable;
+            a reference to constant FullyOptimizableValueArray if all the elements are optimizable; or null
+            if none of the elements are optimizable.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.writeArray(System.SByte[])">
+            <summary>
+            Internal implementation to store a non-null SByte[].
+            </summary>
+            <param name="values">The SByte[] to store.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.writeArray(System.Int16[])">
+            <summary>
+            Internal implementation to store a non-null Int16[].
+            </summary>
+            <param name="values">The Int16[] to store.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.writeArray(System.TimeSpan[],System.Collections.BitArray)">
+            <summary>
+            Internal implementation to write a non-null TimeSpan[] using a BitArray to determine which elements are optimizable.
+            </summary>
+            <param name="values">The TimeSpan[] to store.</param>
+            <param name="optimizeFlags">A BitArray indicating which of the elements which are optimizable;
+            a reference to constant FullyOptimizableValueArray if all the elements are optimizable; or null
+            if none of the elements are optimizable.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.writeArray(System.UInt32[],System.Collections.BitArray)">
+            <summary>
+            Internal implementation to write a non-null UInt32[] using a BitArray to determine which elements are optimizable.
+            </summary>
+            <param name="values">The UInt32[] to store.</param>
+            <param name="optimizeFlags">A BitArray indicating which of the elements which are optimizable;
+            a reference to constant FullyOptimizableValueArray if all the elements are optimizable; or null
+            if none of the elements are optimizable.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.writeArray(System.UInt16[])">
+            <summary>
+            Internal implementation to store a non-null UInt16[].
+            </summary>
+            <param name="values">The UIn16[] to store.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.writeArray(System.UInt64[],System.Collections.BitArray)">
+            <summary>
+            Internal implementation to write a non-null UInt64[] using a BitArray to determine which elements are optimizable.
+            </summary>
+            <param name="values">The UInt64[] to store.</param>
+            <param name="optimizeFlags">A BitArray indicating which of the elements which are optimizable;
+            a reference to constant FullyOptimizableValueArray if all the elements are optimizable; or null
+            if none of the elements are optimizable.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.writeObjectArray(System.Object[])">
+             <summary>
+             Writes the values in the non-null object[] into the stream.
+            
+             Sequences of null values and sequences of DBNull.Values are stored with a flag and optimized count.
+             Other values are stored using WriteObject().
+            
+             This routine is called by the Write(object[]), WriteOptimized(object[]) and Write(object[], object[])) methods.
+             </summary>
+             <param name="values"></param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.writeTypeCode(SimmoTech.Utils.Serialization.SerializedType)">
+             <summary>
+             Stores the specified SerializedType code into the stream.
+            
+             By using a centralized method, it is possible to collect statistics for the
+             type of data being stored in DEBUG mode.
+            
+             Use the DumpTypeUsage() method to show a list of used SerializedTypes and
+             the number of times each has been used. This method and the collection code
+             will be optimized out when compiling in Release mode.
+             </summary>
+             <param name="typeCode">The SerializedType to store.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.writeTypedArray(System.Array,System.Boolean)">
+            <summary>
+            Internal implementation to write a non-null typed array into the stream.
+            </summary>
+            <remarks>
+            Checks first to see if the element type is a primitive type and calls the
+            correct routine if so. Otherwise determines the best, optimized method
+            to store the array contents.
+            <para/>
+            An array of object elements never stores its type.
+            </remarks>
+            <param name="value">The non-null typed array to store.</param>
+            <param name="storeType">True if the type should be stored; false otherwise</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.isTypeRecreatable(System.Type)">
+            <summary>
+            Checks whether instances of a Type can be created.
+            </summary>
+            <remarks>
+            A Value Type only needs to implement IOwnedDataSerializable.
+            A Reference Type needs to implement IOwnedDataSerializableAndRecreatable and provide a default constructor.
+            </remarks>
+            <param name="type">The Type to check</param>
+            <returns>true if the Type is recreatable; false otherwise.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.arrayElementsAreSameType(System.Object[],System.Type)">
+            <summary>
+            Checks whether each element in an array is of the same type.
+            </summary>
+            <param name="values">The array to check</param>
+            <param name="elementType">The expected element type.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.writeTypedArrayTypeCode(System.Collections.BitArray,System.Int32)">
+            <summary>
+            Writes the TypeCode for the Typed Array followed by the number of elements.
+            </summary>
+            <param name="optimizeFlags"></param>
+            <param name="length"></param>
+        </member>
+        <member name="T:SimmoTech.Utils.Serialization.SerializationWriter.SingletonTypeWrapper">
+            <summary>
+            Private class used to wrap an object that is to be tokenized, and recreated at deserialization by its type.
+            </summary>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationWriter.DumpTypeUsage">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="T:SimmoTech.Utils.Serialization.SerializationWriter.UniqueStringList">
+             <summary>
+             Provides a faster way to store string tokens both maintaining the order that they were added and
+             providing a fast lookup.
+            
+             Based on code developed by ewbi at http://ewbi.blogs.com/develops/2006/10/uniquestringlis.html
+             </summary>
+        </member>
+        <member name="T:SimmoTech.Utils.Serialization.SerializationReader">
+             <summary>
+             A SerializationReader instance is used to read stored values and objects from a byte array.
+            
+             Once an instance is created, use the various methods to read the required data.
+             The data read MUST be exactly the same type and in the same order as it was written.
+             </summary>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.#ctor(System.Byte[])">
+             <summary>
+             Creates a SerializationReader using a byte[] previous created by SerializationWriter
+            
+             A MemoryStream is used to access the data without making a copy of it.
+             </summary>
+             <param name="data">The byte[] containining serialized data.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.#ctor(System.IO.Stream)">
+            <summary>
+            Creates a SerializationReader based on the passed Stream.
+            </summary>
+            <param name="stream">The stream containing the serialized data</param>
+        </member>
+        <member name="P:SimmoTech.Utils.Serialization.SerializationReader.BytesRemaining">
+             <summary>
+             Returns the number of bytes or serialized remaining to be processed.
+             Useful for checking that deserialization is complete.
+            
+             Warning: Retrieving the Position in certain stream types can be expensive,
+             e.g. a FileStream, so use sparingly unless known to be a MemoryStream.
+             </summary>
+        </member>
+        <member name="P:SimmoTech.Utils.Serialization.SerializationReader.Position">
+            <summary>
+            Возвращает или задаёт текущую позицию в потоке.
+            </summary>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadArrayList">
+            <summary>
+            Returns an ArrayList or null from the stream.
+            </summary>
+            <returns>An ArrayList instance.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadBitArray">
+            <summary>
+            Returns a BitArray or null from the stream.
+            </summary>
+            <returns>A BitArray instance.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadBitVector32">
+            <summary>
+            Returns a BitVector32 value from the stream.
+            </summary>
+            <returns>A BitVector32 value.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadBytesDirect(System.Int32)">
+            <summary>
+            Reads the specified number of bytes directly from the stream.
+            </summary>
+            <param name="count">The number of bytes to read</param>
+            <returns>A byte[] containing the read bytes</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadDateTime">
+            <summary>
+            Returns a DateTime value from the stream.
+            </summary>
+            <returns>A DateTime value.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadGuid">
+            <summary>
+            Returns a Guid value from the stream.
+            </summary>
+            <returns>A DateTime value.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadDataTable">
+            <summary>
+            Считывает таблицу DataTable.
+            </summary>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadDataSet">
+            <summary>
+            Считывает DataSet.
+            </summary>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadObject">
+            <summary>
+            Returns an object based on the SerializedType read next from the stream.
+            </summary>
+            <returns>An object instance.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadString">
+            <summary>
+            Called ReadOptimizedString().
+            This override to hide base BinaryReader.ReadString().
+            </summary>
+            <returns>A string value.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadStringDirect">
+            <summary>
+            Returns a string value from the stream.
+            </summary>
+            <returns>A string value.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadTimeSpan">
+            <summary>
+            Returns a TimeSpan value from the stream.
+            </summary>
+            <returns>A TimeSpan value.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadType">
+             <summary>
+             Returns a Type or null from the stream.
+            
+             Throws an exception if the Type cannot be found.
+             </summary>
+             <returns>A Type instance.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadType(System.Boolean)">
+             <summary>
+             Returns a Type or null from the stream.
+            
+             Throws an exception if the Type cannot be found and throwOnError is true.
+             </summary>
+             <returns>A Type instance.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadOptimizedArrayList">
+            <summary>
+            Returns an ArrayList from the stream that was stored optimized.
+            </summary>
+            <returns>An ArrayList instance.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadOptimizedBitArray">
+            <summary>
+            Returns a BitArray from the stream that was stored optimized.
+            </summary>
+            <returns>A BitArray instance.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadOptimizedBitVector32">
+            <summary>
+            Returns a BitVector32 value from the stream that was stored optimized.
+            </summary>
+            <returns>A BitVector32 value.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadOptimizedDateTime">
+            <summary>
+            Returns a DateTime value from the stream that was stored optimized.
+            </summary>
+            <returns>A DateTime value.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadOptimizedDecimal">
+            <summary>
+            Returns a Decimal value from the stream that was stored optimized.
+            </summary>
+            <returns>A Decimal value.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadOptimizedInt32">
+            <summary>
+            Returns an Int32 value from the stream that was stored optimized.
+            </summary>
+            <returns>An Int32 value.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadOptimizedInt64">
+            <summary>
+            Returns an Int64 value from the stream that was stored optimized.
+            </summary>
+            <returns>An Int64 value.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadOptimizedObjectArray">
+            <summary>
+            Returns an object[] from the stream that was stored optimized.
+            </summary>
+            <returns>An object[] instance.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadOptimizedObjectArray(System.Type)">
+             <summary>
+             Returns an object[] from the stream that was stored optimized.
+             The returned array will be typed according to the specified element type
+             and the resulting array can be cast to the expected type.
+             e.g.
+             string[] myStrings = (string[]) reader.ReadOptimizedObjectArray(typeof(string));
+            
+             An exception will be thrown if any of the deserialized values cannot be
+             cast to the specified elementType.
+            
+             </summary>
+             <param name="elementType">The Type of the expected array elements. null will return a plain object[].</param>
+             <returns>An object[] instance.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadOptimizedObjectArrayPair(System.Object[]@,System.Object[]@)">
+            <summary>
+            Returns a pair of object[] arrays from the stream that were stored optimized.
+            </summary>
+            <returns>A pair of object[] arrays.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadOptimizedString">
+            <summary>
+            Returns a string value from the stream that was stored optimized.
+            </summary>
+            <returns>A string value.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadOptimizedTimeSpan">
+            <summary>
+            Returns a TimeSpan value from the stream that was stored optimized.
+            </summary>
+            <returns>A TimeSpan value.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadOptimizedType">
+             <summary>
+             Returns a Type from the stream.
+            
+             Throws an exception if the Type cannot be found.
+             </summary>
+             <returns>A Type instance.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadOptimizedType(System.Boolean)">
+             <summary>
+             Returns a Type from the stream.
+            
+             Throws an exception if the Type cannot be found and throwOnError is true.
+             </summary>
+             <returns>A Type instance.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadOptimizedUInt32">
+            <summary>
+            Returns a UInt32 value from the stream that was stored optimized.
+            </summary>
+            <returns>A UInt32 value.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadOptimizedUInt64">
+            <summary>
+            Returns a UInt64 value from the stream that was stored optimized.
+            </summary>
+            <returns>A UInt64 value.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadTypedArray">
+            <summary>
+            Returns a typed array from the stream.
+            </summary>
+            <returns>A typed array.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadDictionary``2">
+            <summary>
+            Returns a new, simple generic dictionary populated with keys and values from the stream.
+            </summary>
+            <typeparam name="K">The key Type.</typeparam>
+            <typeparam name="V">The value Type.</typeparam>
+            <returns>A new, simple, populated generic Dictionary.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadDictionary``2(System.Collections.Generic.Dictionary{``0,``1})">
+            <summary>
+            Populates a pre-existing generic dictionary with keys and values from the stream.
+            This allows a generic dictionary to be created without using the default constructor.
+            </summary>
+            <typeparam name="K">The key Type.</typeparam>
+            <typeparam name="V">The value Type.</typeparam>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadList``1">
+            <summary>
+            Returns a generic List populated with values from the stream.
+            </summary>
+            <typeparam name="T">The list Type.</typeparam>
+            <returns>A new generic List.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadNullable">
+            <summary>
+            Returns a Nullable struct from the stream.
+            The value returned must be cast to the correct Nullable type.
+            Synonym for ReadObject();
+            </summary>
+            <returns>A struct value or null</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadNullableBoolean">
+            <summary>
+            Returns a Nullable Boolean from the stream.
+            </summary>
+            <returns>A Nullable Boolean.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadNullableByte">
+            <summary>
+            Returns a Nullable Byte from the stream.
+            </summary>
+            <returns>A Nullable Byte.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadNullableChar">
+            <summary>
+            Returns a Nullable Char from the stream.
+            </summary>
+            <returns>A Nullable Char.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadNullableDateTime">
+            <summary>
+            Returns a Nullable DateTime from the stream.
+            </summary>
+            <returns>A Nullable DateTime.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadNullableDecimal">
+            <summary>
+            Returns a Nullable Decimal from the stream.
+            </summary>
+            <returns>A Nullable Decimal.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadNullableDouble">
+            <summary>
+            Returns a Nullable Double from the stream.
+            </summary>
+            <returns>A Nullable Double.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadNullableGuid">
+            <summary>
+            Returns a Nullable Guid from the stream.
+            </summary>
+            <returns>A Nullable Guid.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadNullableInt16">
+            <summary>
+            Returns a Nullable Int16 from the stream.
+            </summary>
+            <returns>A Nullable Int16.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadNullableInt32">
+            <summary>
+            Returns a Nullable Int32 from the stream.
+            </summary>
+            <returns>A Nullable Int32.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadNullableInt64">
+            <summary>
+            Returns a Nullable Int64 from the stream.
+            </summary>
+            <returns>A Nullable Int64.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadNullableSByte">
+            <summary>
+            Returns a Nullable SByte from the stream.
+            </summary>
+            <returns>A Nullable SByte.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadNullableSingle">
+            <summary>
+            Returns a Nullable Single from the stream.
+            </summary>
+            <returns>A Nullable Single.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadNullableTimeSpan">
+            <summary>
+            Returns a Nullable TimeSpan from the stream.
+            </summary>
+            <returns>A Nullable TimeSpan.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadNullableUInt16">
+            <summary>
+            Returns a Nullable UInt16 from the stream.
+            </summary>
+            <returns>A Nullable UInt16.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadNullableUInt32">
+            <summary>
+            Returns a Nullable UInt32 from the stream.
+            </summary>
+            <returns>A Nullable UInt32.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadNullableUInt64">
+            <summary>
+            Returns a Nullable UInt64 from the stream.
+            </summary>
+            <returns>A Nullable UInt64.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadByteArray">
+            <summary>
+            Returns a Byte[] from the stream.
+            </summary>
+            <returns>A Byte instance; or null.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadCharArray">
+            <summary>
+            Returns a Char[] from the stream.
+            </summary>
+            <returns>A Char[] value; or null.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadDoubleArray">
+            <summary>
+            Returns a Double[] from the stream.
+            </summary>
+            <returns>A Double[] instance; or null.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadGuidArray">
+            <summary>
+            Returns a Guid[] from the stream.
+            </summary>
+            <returns>A Guid[] instance; or null.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadInt16Array">
+            <summary>
+            Returns an Int16[] from the stream.
+            </summary>
+            <returns>An Int16[] instance; or null.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadObjectArray">
+            <summary>
+            Returns an object[] or null from the stream.
+            </summary>
+            <returns>A DateTime value.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadObjectArray(System.Type)">
+             <summary>
+             Returns an object[] or null from the stream.
+             The returned array will be typed according to the specified element type
+             and the resulting array can be cast to the expected type.
+             e.g.
+             string[] myStrings = (string[]) reader.ReadObjectArray(typeof(string));
+            
+             An exception will be thrown if any of the deserialized values cannot be
+             cast to the specified elementType.
+            
+             </summary>
+             <param name="elementType">The Type of the expected array elements. null will return a plain object[].</param>
+             <returns>An object[] instance.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadSingleArray">
+            <summary>
+            Returns a Single[] from the stream.
+            </summary>
+            <returns>A Single[] instance; or null.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadSByteArray">
+            <summary>
+            Returns an SByte[] from the stream.
+            </summary>
+            <returns>An SByte[] instance; or null.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadStringArray">
+            <summary>
+            Returns a string[] or null from the stream.
+            </summary>
+            <returns>An string[] instance.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadUInt16Array">
+            <summary>
+            Returns a UInt16[] from the stream.
+            </summary>
+            <returns>A UInt16[] instance; or null.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadBooleanArray">
+            <summary>
+            Returns a Boolean[] from the stream.
+            </summary>
+            <returns>A Boolean[] instance; or null.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadDateTimeArray">
+            <summary>
+            Returns a DateTime[] from the stream.
+            </summary>
+            <returns>A DateTime[] instance; or null.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadDecimalArray">
+            <summary>
+            Returns a Decimal[] from the stream.
+            </summary>
+            <returns>A Decimal[] instance; or null.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadInt32Array">
+            <summary>
+            Returns an Int32[] from the stream.
+            </summary>
+            <returns>An Int32[] instance; or null.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadInt64Array">
+            <summary>
+            Returns an Int64[] from the stream.
+            </summary>
+            <returns>An Int64[] instance; or null.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadOptimizedStringArray">
+            <summary>
+            Returns a string[] from the stream that was stored optimized.
+            </summary>
+            <returns>An string[] instance.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadTimeSpanArray">
+            <summary>
+            Returns a TimeSpan[] from the stream.
+            </summary>
+            <returns>A TimeSpan[] instance; or null.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadUInt32Array">
+            <summary>
+            Returns a UInt[] from the stream.
+            </summary>
+            <returns>A UInt[] instance; or null.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadUInt64Array">
+            <summary>
+            Returns a UInt64[] from the stream.
+            </summary>
+            <returns>A UInt64[] instance; or null.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadOptimizedBooleanArray">
+            <summary>
+            Returns a Boolean[] from the stream.
+            </summary>
+            <returns>A Boolean[] instance; or null.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadOptimizedDateTimeArray">
+            <summary>
+            Returns a DateTime[] from the stream.
+            </summary>
+            <returns>A DateTime[] instance; or null.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadOptimizedDecimalArray">
+            <summary>
+            Returns a Decimal[] from the stream.
+            </summary>
+            <returns>A Decimal[] instance; or null.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadOptimizedInt32Array">
+            <summary>
+            Returns a Int32[] from the stream.
+            </summary>
+            <returns>An Int32[] instance; or null.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadOptimizedInt64Array">
+            <summary>
+            Returns a Int64[] from the stream.
+            </summary>
+            <returns>A Int64[] instance; or null.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadOptimizedTimeSpanArray">
+            <summary>
+            Returns a TimeSpan[] from the stream.
+            </summary>
+            <returns>A TimeSpan[] instance; or null.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadOptimizedUInt32Array">
+            <summary>
+            Returns a UInt32[] from the stream.
+            </summary>
+            <returns>A UInt32[] instance; or null.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadOptimizedUInt64Array">
+            <summary>
+            Returns a UInt64[] from the stream.
+            </summary>
+            <returns>A UInt64[] instance; or null.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadOwnedData(SimmoTech.Utils.Serialization.IOwnedDataSerializable,System.Object)">
+            <summary>
+            Allows an existing object, implementing IOwnedDataSerializable, to
+            retrieve its owned data from the stream.
+            </summary>
+            <param name="target">Any IOwnedDataSerializable object.</param>
+            <param name="context">An optional, arbitrary object to allow context to be provided.</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.ReadTokenizedObject">
+            <summary>
+            Returns the object associated with the object token read next from the stream.
+            </summary>
+            <returns>An object.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.decodeTimeSpan(System.Byte)">
+            <summary>
+            Returns a TimeSpan decoded from packed data.
+            This routine is called from ReadOptimizedDateTime() and ReadOptimizedTimeSpan().
+            <remarks>
+            This routine uses a parameter to allow ReadOptimizedDateTime() to 'peek' at the
+            next byte and extract the DateTimeKind from bits one and two (IsNegative and HasDays)
+            which are never set for a Time portion of a DateTime.
+            </remarks>
+            </summary>
+            <param name="initialByte">The first of two always-present bytes.</param>
+            <returns>A decoded TimeSpan</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.readTypedArrayOptimizeFlags(SimmoTech.Utils.Serialization.SerializedType)">
+            <summary>
+            Creates a BitArray representing which elements of a typed array
+            are serializable.
+            </summary>
+            <param name="serializedType">The type of typed array.</param>
+            <returns>A BitArray denoting which elements are serializable.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.processObject(SimmoTech.Utils.Serialization.SerializedType)">
+            <summary>
+            Returns an object based on supplied SerializedType.
+            </summary>
+            <returns>An object instance.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.processArrayTypes(SimmoTech.Utils.Serialization.SerializedType,System.Type)">
+            <summary>
+            Determine whether the passed-in type code refers to an array type
+            and deserializes the array if it is.
+            Returns null if not an array type.
+            </summary>
+            <param name="typeCode">The SerializedType to check.</param>
+            <param name="defaultElementType">The Type of array element; null if to be read from stream.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.readTokenizedString(System.Int32)">
+            <summary>
+            Returns the string value associated with the string token read next from the stream.
+            </summary>
+            <returns>A DateTime value.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.readTypeCode">
+            <summary>
+            Returns the SerializedType read next from the stream.
+            </summary>
+            <returns>A SerializedType value.</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.readBooleanArray">
+            <summary>
+            Internal implementation returning a Bool[].
+            </summary>
+            <returns>A Bool[].</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.readByteArray">
+            <summary>
+            Internal implementation returning a Byte[].
+            </summary>
+            <returns>A Byte[].</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.readCharArray">
+            <summary>
+            Internal implementation returning a Char[].
+            </summary>
+            <returns>A Char[].</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.readDecimalArray">
+            <summary>
+            Internal implementation returning a Decimal[].
+            </summary>
+            <returns>A Decimal[].</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.readDoubleArray">
+            <summary>
+            Internal implementation returning a Double[].
+            </summary>
+            <returns>A Double[].</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.readGuidArray">
+            <summary>
+            Internal implementation returning a Guid[].
+            </summary>
+            <returns>A Guid[].</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.readDataTableArray">
+            <summary>
+            Internal implementation returning a Guid[].
+            </summary>
+            <returns>A Guid[].</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.readDataSetArray">
+            <summary>
+            Internal implementation returning a Guid[].
+            </summary>
+            <returns>A Guid[].</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.readInt16Array">
+            <summary>
+            Internal implementation returning an Int16[].
+            </summary>
+            <returns>An Int16[].</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.readSByteArray">
+            <summary>
+            Internal implementation returning an SByte[].
+            </summary>
+            <returns>An SByte[].</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.readSingleArray">
+            <summary>
+            Internal implementation returning a Single[].
+            </summary>
+            <returns>A Single[].</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.readUInt16Array">
+            <summary>
+            Internal implementation returning a UInt16[].
+            </summary>
+            <returns>A UInt16[].</returns>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.SerializationReader.DumpStringTables(System.Collections.ArrayList)">
+             <summary>
+            
+             </summary>
+             <param name="list"></param>
+        </member>
+        <member name="T:SimmoTech.Utils.Serialization.OptimizationException">
+            <summary>
+            Exception thrown when a value being optimized does not meet the required criteria for optimization.
+            </summary>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.OptimizationException.#ctor(System.String)">
+             <summary>
+            
+             </summary>
+             <param name="message"></param>
+        </member>
+        <member name="T:SimmoTech.Utils.Serialization.IOwnedDataSerializableAndRecreatable">
+            <summary>
+            Allows a class to specify that it can be recreated during deserialization using a default constructor
+            and then calling DeserializeOwnedData()
+            </summary>
+        </member>
+        <member name="T:SimmoTech.Utils.Serialization.IOwnedDataSerializable">
+            <summary>
+            Allows a class to save/retrieve their internal data to/from an existing SerializationWriter/SerializationReader.
+            </summary>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.IOwnedDataSerializable.SerializeOwnedData(SimmoTech.Utils.Serialization.SerializationWriter,System.Object)">
+            <summary>
+            Lets the implementing class store internal data directly into a SerializationWriter.
+            </summary>
+            <param name="writer">The SerializationWriter to use</param>
+            <param name="context">Optional context to use as a hint as to what to store (BitVector32 is useful)</param>
+        </member>
+        <member name="M:SimmoTech.Utils.Serialization.IOwnedDataSerializable.DeserializeOwnedData(SimmoTech.Utils.Serialization.SerializationReader,System.Object)">
+            <summary>
+            Lets the implementing class retrieve internal data directly from a SerializationReader.
+            </summary>
+            <param name="reader">The SerializationReader to use</param>
+            <param name="context">Optional context to use as a hint as to what to retrieve (BitVector32 is useful) </param>
+        </member>
+        <member name="T:SimmoTech.Utils.Serialization.SerializedType">
+            <summary>
+            Stores information about a type or type/value.
+            Internal use only.
+            </summary>
+        </member>
+        <member name="T:Lers.Common.PropertyBag">
+            <summary>
+            PropertyBag.
+            </summary>
+        </member>
+        <member name="F:Lers.Common.PropertyBag.Items">
+            <summary>
+            Коллекция свойств.
+            </summary>
+        </member>
+        <member name="P:Lers.Common.PropertyBag.Count">
+            <summary>
+            Возвращает текущее кол-во свойств.
+            </summary>
+        </member>
+        <member name="F:Lers.Common.PropertyBag.contents">
+            <summary>
+            Принудительно сериализованное содержимое после закрытия объекта.
+            </summary>
+        </member>
+        <member name="P:Lers.Common.PropertyBag.Contents">
+            <summary>
+            Получить/записать бинарное содержимое.
+            </summary>
+        </member>
+        <member name="P:Lers.Common.PropertyBag.Empty">
+            <summary>
+            Возвращает пустой пакет.
+            </summary>
+        </member>
+        <member name="M:Lers.Common.PropertyBag.#ctor">
+            <summary>
+            Конструктор по умолчанию.
+            </summary>
+        </member>
+        <member name="M:Lers.Common.PropertyBag.#ctor(System.Byte[])">
+            <summary>
+            Создает экземпляр PropertyBag и десериализует его из переданного массива байт.
+            </summary>
+        </member>
+        <member name="M:Lers.Common.PropertyBag.Clear">
+            <summary>
+            Очистка коллекции свойств.
+            </summary>
+        </member>
+        <member name="M:Lers.Common.PropertyBag.SetContents(System.Byte[])">
+            <summary>
+            Запись бинарного содержимого (десериализация).
+            </summary>
+            <param name="value">Сериализованный PropertyBag в виде массива байт.</param>
+        </member>
+        <member name="M:Lers.Common.PropertyBag.GetContents">
+            <summary>
+            Чтение бинарного содержимого (сериализация).
+            </summary>
+            <returns>Возвращает сериализованный PropertyBag в виде массива байт.</returns>
+        </member>
+        <member name="M:Lers.Common.PropertyBag.Close">
+            <summary>
+            Сериализует и запрещает дальнейшее использование экземпляра, кроме получения массива байт.
+            </summary>
+        </member>
+        <member name="M:Lers.Common.PropertyBag.Contains(System.String)">
+            <summary>
+            Определяет, содержится ли указанное свойство в коллекции.
+            </summary>
+            <param name="name">Наименование свойства.</param>
+            <returns>Возвращает true, если такое свойство есть, иначе false.</returns>
+        </member>
+        <member name="P:Lers.Common.PropertyBag.Item(System.String)">
+            <summary>
+            Запись или чтение указанного свойства.
+            </summary>
+            <param name="name">Наименование свойства.</param>
+            <returns>Возвращает значение свойства.</returns>
+            <remarks>Если свойство отсутствует, то будет выдано исключение <see cref="T:System.Collections.Generic.KeyNotFoundException"/>.</remarks>
+        </member>
+        <member name="M:Lers.Common.PropertyBag.WriteProperty(System.String,System.Object)">
+            <summary>
+            Запись свойства.
+            </summary>
+            <param name="name">Наименование свойства.</param>
+            <param name="value">Значение.</param>
+        </member>
+        <member name="M:Lers.Common.PropertyBag.ReadProperty(System.String,System.Object)">
+            <summary>
+            Чтение свойства.
+            </summary>
+            <param name="name">Наименование свойства.</param>
+            <param name="defaultValue">Значение по умолчанию.</param>
+            <returns>Возвращает ранее записанное значение, либо значение по умолчанию.</returns>
+        </member>
+        <member name="M:Lers.Common.PropertyBag.ReadProperty(System.String)">
+            <summary>
+            Чтение свойства.
+            </summary>
+            <param name="name">Наименование свойства.</param>
+            <returns>Возвращает ранее записанное значение, либо null.</returns>
+        </member>
+        <member name="M:Lers.Common.PropertyBag.DeleteProperty(System.String)">
+            <summary>
+            Удаление свойства.
+            </summary>
+            <param name="name">Наименование свойства.</param>
+            <remarks>Если свойство с указанным наименование отсутствует, то ничего не происходит.</remarks>
+        </member>
+        <member name="M:Lers.Common.PropertyBag.GetEnumerator">
+            <summary>
+            Возвращает перечислитель, выполняющий перебор элементов в коллекции.
+            </summary>
+            <returns>Интерфейс IEnumerator(Of T), который может использоваться для перебора элементов коллекции.</returns>
+        </member>
+        <member name="M:Lers.Common.PropertyBag.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            Возвращает перечислитель, который осуществляет перебор элементов коллекции.
+            </summary>
+            <returns>Объект IEnumerator, который может использоваться для перебора элементов коллекции.</returns>
+        </member>
+        <member name="P:Lers.Common.PropertyBag.IsDisposed">
+            <summary>
+            Получает значение, показывающее, был ли удален объект.
+            </summary>
+        </member>
+        <member name="M:Lers.Common.PropertyBag.CheckDisposed">
+            <summary>
+            Проверяет, был ли удален объект, и если да, то бросает исключение.
+            </summary>
+        </member>
+        <member name="M:Lers.Common.PropertyBag.Dispose">
+            <summary>
+            Освобождает все ресурсы, используемые объектом.
+            </summary>
+        </member>
+        <member name="T:Lers.Common.PropertyBagStreamReader">
+            <summary>
+            Поток данных для десериализации PropertyBag.
+            </summary>
+        </member>
+        <member name="F:Lers.Common.PropertyBagStreamReader.stream">
+            <summary>
+            Поток в памяти.
+            </summary>
+        </member>
+        <member name="F:Lers.Common.PropertyBagStreamReader.reader">
+            <summary>
+            Считывает простые типы данных из потока.
+            </summary>
+        </member>
+        <member name="M:Lers.Common.PropertyBagStreamReader.#ctor(System.Byte[])">
+            <summary>
+            Конструктор по умолчанию.
+            </summary>
+        </member>
+        <member name="M:Lers.Common.PropertyBagStreamReader.ReadString">
+            <summary>
+            Десериализация строки.
+            </summary>
+            <returns>Возвращает строку.</returns>
+        </member>
+        <member name="M:Lers.Common.PropertyBagStreamReader.Read">
+            <summary>
+            Десериализация объекта.
+            </summary>
+            <returns>Возвращает объект.</returns>
+        </member>
+        <member name="M:Lers.Common.PropertyBagStreamReader.Read(System.Runtime.InteropServices.VarEnum)">
+            <summary>
+            Десериализация объекта с указанием типа.
+            </summary>
+            <param name="type">Тип variant.</param>
+            <returns>Возвращает объект.</returns>
+        </member>
+        <member name="M:Lers.Common.PropertyBagStreamReader.ReadArray(System.Runtime.InteropServices.VarEnum)">
+            <summary>
+            Десериализует массив.
+            </summary>
+            <param name="elementType">Тип элемента массива.</param>
+            <returns>Возвращает массив.</returns>
+        </member>
+        <member name="M:Lers.Common.PropertyBagStreamReader.ReadDataTable">
+            <summary>
+            Десериализует таблицу <see cref="T:System.Data.DataTable"/>.
+            </summary>
+            <returns>Возвращает таблицу <see cref="T:System.Data.DataTable"/>.</returns>
+        </member>
+        <member name="M:Lers.Common.PropertyBagStreamReader.VarEnumToType(System.Runtime.InteropServices.VarEnum)">
+            <summary>
+            Возвращает соответствующий тип для заданного VarEnum.
+            </summary>
+            <param name="variant">Одно из значений VarEnum.</param>
+            <returns>Возвращает <see cref="T:System.Type"/>.</returns>
+        </member>
+        <member name="F:Lers.Common.PropertyBagStreamReader.isDisposed">
+            <summary>
+            Получает значение, показывающее, был ли удален объект.
+            </summary>
+        </member>
+        <member name="M:Lers.Common.PropertyBagStreamReader.Dispose">
+            <summary>
+            Освобождает все ресурсы, используемые объектом.
+            </summary>
+        </member>
+        <member name="T:Lers.Common.PropertyBagStreamWriter">
+            <summary>
+            Поток данных для сериализации PropertyBag.
+            </summary>
+        </member>
+        <member name="F:Lers.Common.PropertyBagStreamWriter.stream">
+            <summary>
+            Поток в памяти.
+            </summary>
+        </member>
+        <member name="F:Lers.Common.PropertyBagStreamWriter.writer">
+            <summary>
+            Записывает простые типы данных в поток.
+            </summary>
+        </member>
+        <member name="M:Lers.Common.PropertyBagStreamWriter.#ctor">
+            <summary>
+            Конструктор по умолчанию.
+            </summary>
+        </member>
+        <member name="M:Lers.Common.PropertyBagStreamWriter.ToArray">
+            <summary>
+            Возвращает сериализованное содержимое потока.
+            </summary>
+            <returns>Массив байт.</returns>
+        </member>
+        <member name="M:Lers.Common.PropertyBagStreamWriter.WriteString(System.String)">
+            <summary>
+            Сериализация строки.
+            </summary>
+            <param name="value">Значение.</param>
+        </member>
+        <member name="M:Lers.Common.PropertyBagStreamWriter.Write(System.Object)">
+            <summary>
+            Сериализация объекта.
+            </summary>
+            <param name="value">Значение.</param>
+        </member>
+        <member name="M:Lers.Common.PropertyBagStreamWriter.WriteWithoutType(System.Object)">
+            <summary>
+            Сериализация объекта.
+            </summary>
+            <param name="value">Значение.</param>
+        </member>
+        <member name="M:Lers.Common.PropertyBagStreamWriter.WriteArray(System.Array)">
+            <summary>
+            Сериализует массив.
+            </summary>
+            <param name="array">Массив.</param>
+        </member>
+        <member name="M:Lers.Common.PropertyBagStreamWriter.WriteDataTable(System.Data.DataTable)">
+            <summary>
+            Сериализует таблицу <see cref="T:System.Data.DataTable"/>.
+            </summary>
+            <param name="dataTable">Таблица.</param>
+        </member>
+        <member name="M:Lers.Common.PropertyBagStreamWriter.TypeToVarEnum(System.Type)">
+            <summary>
+            Возвращает соответствующий VarEnum для заданного типа.
+            </summary>
+            <param name="type">Объект <see cref="T:System.Type"/>.</param>
+            <returns>Возвращает <see cref="T:System.Runtime.InteropServices.VarEnum"/>.</returns>
+        </member>
+        <member name="M:Lers.Common.PropertyBagStreamWriter.GetTypeSize(System.Type)">
+            <summary>
+            Возвращает размер объека указанного типа в байтах.
+            </summary>
+            <param name="type">Тип.</param>
+            <returns>Возвращает кол-во байт.</returns>
+        </member>
+        <member name="F:Lers.Common.PropertyBagStreamWriter.isDisposed">
+            <summary>
+            Получает значение, показывающее, был ли удален объект.
+            </summary>
+        </member>
+        <member name="M:Lers.Common.PropertyBagStreamWriter.Dispose">
+            <summary>
+            Освобождает все ресурсы, используемые объектом.
+            </summary>
+        </member>
+        <member name="T:Lers.Serialization.ClassFactoryLocator">
+            <summary>
+            Содержит методы для поиска сборки, в которой находится указанное имя типа.
+            </summary>
+        </member>
+        <member name="M:Lers.Serialization.ClassFactoryLocator.Locate(System.String)">
+            <summary>
+            Возвращает сборку, в которой содержится тип с указанным именем.
+            </summary>
+            <param name="typeName">Имя типа, которое нужно найти в сборке.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Lers.Serialization.ClassFactoryLocator.LocateClassFactoryInternal(System.String)">
+            <summary>
+            Возвращает сборку с указанным имененм типа.
+            </summary>
+            <param name="typeName">Имся типа.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Lers.Serialization.ClassFactoryLocator.ContainsType(System.Reflection.Assembly,System.String)">
+            <summary>
+            Определяет содержит ли сборка укзанный тип данных.
+            </summary>
+            <param name="assembly"></param>
+            <param name="typeName"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Lers.Serialization.LersSerializableAttribute">
+            <summary>
+            Указывает на возможность сериализации класса средствами LersSerializer.
+            </summary>
+        </member>
+        <member name="P:Lers.Serialization.LersSerializableAttribute.SerializedName">
+            <summary>
+            Имя, с которым должен быть сериализован тип. По умолчанию тип сериализуется под своим именем.
+            </summary>
+        </member>
+        <member name="P:Lers.Serialization.LersSerializableAttribute.IgnoreUnkownFields">
+            <summary>
+            Указывает что при десериализации класса нужно пропустить неизвестные поля.
+            Если установлено в false, будет выдаваться исключение.
+            </summary>
+        </member>
+        <member name="M:Lers.Serialization.LersSerializableAttribute.#ctor(System.String,System.Boolean)">
+            <summary>
+            Конструктор.
+            </summary>
+            <param name="serializedName">Имя, с которым помеченный атрибутом класс будет сериализоан.</param>
+            <param name="ignoreUnkownFields">Указвыает что при десериализации нужно игнорировать неизвестные поля, не выдавая исключений.</param>
+        </member>
+        <member name="T:Lers.Serialization.LersSerializationException">
+            <summary>
+            Возникает при ошибках сериализации и десериализации.
+            </summary>
+        </member>
+        <member name="M:Lers.Serialization.LersSerializationException.#ctor(System.String)">
+            <summary>
+            Инициализирует новый экземпляр с указанием сообщения.
+            </summary>
+            <param name="message">Сообщение с описанием ошибки.</param>
+        </member>
+        <member name="M:Lers.Serialization.LersSerializationException.#ctor(System.String,System.Exception)">
+            <summary>
+            Инициализирует новый экземпляр с указанием ошибки и вложенного исключения.
+            </summary>
+            <param name="message">Сообщение с описанием ошибки.</param>
+            <param name="innerException">Вложенное исключение.</param>
+        </member>
+        <member name="T:Lers.Serialization.LersSerializer">
+            <summary>
+            Выполняет сериализацию и десериализацию объектов.
+            </summary>
+        </member>
+        <member name="T:Lers.Serialization.LersSerializer.SerializedType">
+            <summary>
+            Тип сериализованных данных.
+            </summary>
+        </member>
+        <member name="F:Lers.Serialization.LersSerializer.SerializedType.Class">
+            <summary>
+            Класс с полями и свойствами.
+            </summary>
+        </member>
+        <member name="F:Lers.Serialization.LersSerializer.SerializedType.ClassArray">
+            <summary>
+            Массив классов с полями и свойствами.
+            </summary>
+        </member>
+        <member name="F:Lers.Serialization.LersSerializer.SerializedType.SimpleType">
+            <summary>
+            Простой тип.
+            </summary>
+        </member>
+        <member name="M:Lers.Serialization.LersSerializer.Serialize(System.Object)">
+            <summary>
+            Сериализует объект.
+            </summary>
+            <param name="value">Экземпяр объекта.</param>
+            <returns>Возвращает сериализованные данные в бинарном виде.</returns>
+        </member>
+        <member name="M:Lers.Serialization.LersSerializer.SerializeSimpeType(System.Object,SimmoTech.Utils.Serialization.SerializationWriter)">
+            <summary>
+            Сериализует простой тип.
+            </summary>
+            <param name="value">Значение.</param>
+            <param name="writer">Сериализатор.</param>
+        </member>
+        <member name="M:Lers.Serialization.LersSerializer.SerializeClass(System.Object,System.Type,SimmoTech.Utils.Serialization.SerializationWriter)">
+            <summary>
+            Сериализует указанный класс.
+            </summary>
+            <param name="value">Экземпляр объекта.</param>
+            <param name="type">Сериализуемый тип.</param>
+            <param name="writer">Сериализатор.</param>
+        </member>
+        <member name="M:Lers.Serialization.LersSerializer.SerializeClassArray(System.Array,System.Type,SimmoTech.Utils.Serialization.SerializationWriter)">
+            <summary>
+            Сериализует массив классов.
+            </summary>
+            <param name="value">Массив.</param>
+            <param name="memberType">Сериализуемый тип.</param>
+            <param name="writer">Сериализатор.</param>
+        </member>
+        <member name="M:Lers.Serialization.LersSerializer.SerializeMember(System.String,System.Object,System.Type,SimmoTech.Utils.Serialization.SerializationWriter)">
+            <summary>
+            Сериализует поле или свойство.
+            </summary>
+            <param name="name">Имя поля или свойства.</param>
+            <param name="value">Значение.</param>
+            <param name="memberType">Тип значения.</param>
+            <param name="writer">Сериализатор.</param>
+        </member>
+        <member name="M:Lers.Serialization.LersSerializer.FindMembers(System.Type)">
+            <summary>
+            Находит все поля и свойства класса для сериализации.
+            </summary>
+            <param name="type">Тип класса.</param>
+            <returns>Возвращает массив <see cref="T:System.Reflection.MemberInfo"/>.</returns>
+        </member>
+        <member name="M:Lers.Serialization.LersSerializer.Deserialize``1(System.Byte[])">
+            <summary>
+            Десериализует указанные данные.
+            </summary>
+            <typeparam name="TResult"></typeparam>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Lers.Serialization.LersSerializer.Deserialize(System.Byte[])">
+            <summary>
+            Десериализует указанные данные.
+            </summary>
+            <param name="data">Данные.</param>
+            <returns>Возвращает </returns>
+        </member>
+        <member name="M:Lers.Serialization.LersSerializer.DeserializeClass(SimmoTech.Utils.Serialization.SerializationReader)">
+            <summary>
+            Десериализует класс.
+            </summary>
+            <param name="reader">Десериализатор.</param>
+            <returns>Возвращает экземпляр десериализованного объекта.</returns>
+        </member>
+        <member name="M:Lers.Serialization.LersSerializer.DeserializeClassArray(SimmoTech.Utils.Serialization.SerializationReader)">
+            <summary>
+            Десериализует массив классов.
+            </summary>
+            <param name="reader">Десериализатор.</param>
+            <param name="throwIfAbsent"></param>
+            <returns>Возвращает экземпляр десериализованного массива.</returns>
+        </member>
+        <member name="M:Lers.Serialization.LersSerializer.DeserializeMemeber(System.Object,SimmoTech.Utils.Serialization.SerializationReader,System.Boolean)">
+            <summary>
+            Десериализует поле или свойство.
+            </summary>
+            <param name="obj">Экземпляр объекта, которому принадлежит свойство..</param>
+            <param name="reader">Десериализатор.</param>
+            <param name="throwIfPropertyAbsent">
+            Указывает что при отсутствии поля в целевом классе требуется выдать исключение.
+            </param>
+        </member>
+        <member name="M:Lers.Serialization.LersSerializer.SetMemberValue(System.Object,System.Reflection.MemberInfo,System.Object)">
+            <summary>
+            Задает значение для поля или свойства объекта.
+            </summary>
+            <param name="obj">Экземпляр объекта.</param>
+            <param name="member">Информация о поле или свойстве.</param>
+            <param name="value">Значение.</param>
+        </member>
+        <member name="M:Lers.Serialization.LersSerializer.ConvertValue(System.Object,System.Type)">
+            <summary>
+            Преобразует значение к требуемому типу, если это необходимо.
+            </summary>
+            <param name="value">Значение.</param>
+            <param name="targetType">Требуемый тип.</param>
+            <returns>Возвращает преобразованное значение.</returns>
+        </member>
+        <member name="M:Lers.Serialization.LersSerializer.IsSimpleType(System.Type)">
+            <summary>
+            Определяет, является ли тип простым.
+            </summary>
+            <param name="type">Тип.</param>
+            <returns>Возвращает true если тип простой, иначе - false.</returns>
+        </member>
+        <member name="M:Lers.Serialization.LersSerializer.IsNullable(System.Type)">
+            <summary>
+            Определяет, является ли тип Nullable.
+            </summary>
+        </member>
+        <member name="M:Lers.Serialization.LersSerializer.GetSerializableAttribute(System.Type)">
+            <summary>
+            Возвращает атрибут, определяющий является ли тип сериализуемым.
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

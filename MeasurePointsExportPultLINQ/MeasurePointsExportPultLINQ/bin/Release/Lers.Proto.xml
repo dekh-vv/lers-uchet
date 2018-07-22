@@ -1,0 +1,376 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Lers.Proto</name>
+    </assembly>
+    <members>
+        <member name="T:Lers.Proto.Messages.MsgBackupDataBaseReflection">
+            <summary>Holder for reflection information generated from MsgBackupDataBase.proto</summary>
+        </member>
+        <member name="P:Lers.Proto.Messages.MsgBackupDataBaseReflection.Descriptor">
+            <summary>File descriptor for MsgBackupDataBase.proto</summary>
+        </member>
+        <member name="F:Lers.Proto.Messages.MsgBackupDatabase.BackupDirectoryFieldNumber">
+            <summary>Field number for the "BackupDirectory" field.</summary>
+        </member>
+        <member name="P:Lers.Proto.Messages.MsgBackupDatabase.BackupDirectory">
+            <summary>
+             Директория, в которой будет создана резервная копия.
+            </summary>
+        </member>
+        <member name="T:Lers.Proto.Messages.MsgCurrentConsumptionDataReadReflection">
+            <summary>Holder for reflection information generated from MsgCurrentConsumptionDataRead.proto</summary>
+        </member>
+        <member name="P:Lers.Proto.Messages.MsgCurrentConsumptionDataReadReflection.Descriptor">
+            <summary>File descriptor for MsgCurrentConsumptionDataRead.proto</summary>
+        </member>
+        <member name="F:Lers.Proto.Messages.MsgCurrentConsumptionDataRead.MeasurePointIdFieldNumber">
+            <summary>Field number for the "MeasurePointId" field.</summary>
+        </member>
+        <member name="P:Lers.Proto.Messages.MsgCurrentConsumptionDataRead.MeasurePointId">
+            <summary>
+             Идентификатор точки учета.
+            </summary>
+        </member>
+        <member name="F:Lers.Proto.Messages.MsgCurrentConsumptionDataRead.ConsumptionFieldNumber">
+            <summary>Field number for the "Consumption" field.</summary>
+        </member>
+        <member name="P:Lers.Proto.Messages.MsgCurrentConsumptionDataRead.Consumption">
+            <summary>
+             Считанные данные с текущим потребелнием.
+            </summary>
+        </member>
+        <member name="T:Lers.Proto.Messages.MsgDataParameterPropertiesReflection">
+            <summary>Holder for reflection information generated from MsgDataParameterProperties.proto</summary>
+        </member>
+        <member name="P:Lers.Proto.Messages.MsgDataParameterPropertiesReflection.Descriptor">
+            <summary>File descriptor for MsgDataParameterProperties.proto</summary>
+        </member>
+        <member name="F:Lers.Proto.Messages.MsgDataParameterProperties.DataParameterFieldNumber">
+            <summary>Field number for the "DataParameter" field.</summary>
+        </member>
+        <member name="P:Lers.Proto.Messages.MsgDataParameterProperties.DataParameter">
+            <summary>
+             Передаваемый параметр
+            </summary>
+        </member>
+        <member name="F:Lers.Proto.Messages.MsgDataParameterProperties.IsBadFieldNumber">
+            <summary>Field number for the "IsBad" field.</summary>
+        </member>
+        <member name="P:Lers.Proto.Messages.MsgDataParameterProperties.IsBad">
+            <summary>
+             Флаг недостоверных данных
+            </summary>
+        </member>
+        <member name="F:Lers.Proto.Messages.MsgDataParameterProperties.IsCalcFieldNumber">
+            <summary>Field number for the "IsCalc" field.</summary>
+        </member>
+        <member name="P:Lers.Proto.Messages.MsgDataParameterProperties.IsCalc">
+            <summary>
+             Флаг рассчитанных данных
+            </summary>
+        </member>
+        <member name="F:Lers.Proto.Messages.MsgDataParameterProperties.ValueFieldNumber">
+            <summary>Field number for the "Value" field.</summary>
+        </member>
+        <member name="P:Lers.Proto.Messages.MsgDataParameterProperties.Value">
+            <summary>
+             Значение параметра
+            </summary>
+        </member>
+        <member name="T:Lers.Proto.Messages.MsgDataParameterValuePairReflection">
+            <summary>Holder for reflection information generated from MsgDataParameterValuePair.proto</summary>
+        </member>
+        <member name="P:Lers.Proto.Messages.MsgDataParameterValuePairReflection.Descriptor">
+            <summary>File descriptor for MsgDataParameterValuePair.proto</summary>
+        </member>
+        <member name="F:Lers.Proto.Messages.MsgDataParameterValuePair.DataParameterFieldNumber">
+            <summary>Field number for the "DataParameter" field.</summary>
+        </member>
+        <member name="P:Lers.Proto.Messages.MsgDataParameterValuePair.DataParameter">
+            <summary>
+             Передаваемый параметр
+            </summary>
+        </member>
+        <member name="F:Lers.Proto.Messages.MsgDataParameterValuePair.ValueFieldNumber">
+            <summary>Field number for the "Value" field.</summary>
+        </member>
+        <member name="P:Lers.Proto.Messages.MsgDataParameterValuePair.Value">
+            <summary>
+             Значение параметра
+            </summary>
+        </member>
+        <member name="T:Lers.Proto.Messages.MsgGetImportDataPreviewResponseReflection">
+            <summary>Holder for reflection information generated from MsgGetImportDataPreviewResponse.proto</summary>
+        </member>
+        <member name="P:Lers.Proto.Messages.MsgGetImportDataPreviewResponseReflection.Descriptor">
+            <summary>File descriptor for MsgGetImportDataPreviewResponse.proto</summary>
+        </member>
+        <member name="F:Lers.Proto.Messages.MsgGetImportDataPreviewResponse.DataCollectionFieldNumber">
+            <summary>Field number for the "DataCollection" field.</summary>
+        </member>
+        <member name="P:Lers.Proto.Messages.MsgGetImportDataPreviewResponse.DataCollection">
+            <summary>
+             Записи с данными для предпросмотра импортируемых данных.
+            </summary>
+        </member>
+        <member name="T:Lers.Proto.Messages.MsgGetLastDataResponseReflection">
+            <summary>Holder for reflection information generated from MsgGetLastDataResponse.proto</summary>
+        </member>
+        <member name="P:Lers.Proto.Messages.MsgGetLastDataResponseReflection.Descriptor">
+            <summary>File descriptor for MsgGetLastDataResponse.proto</summary>
+        </member>
+        <member name="F:Lers.Proto.Messages.MsgLastMeasurePointConsumption.AttributesFieldNumber">
+            <summary>Field number for the "Attributes" field.</summary>
+        </member>
+        <member name="F:Lers.Proto.Messages.MsgLastMeasurePointConsumption.DateTimeFieldNumber">
+            <summary>Field number for the "DateTime" field.</summary>
+        </member>
+        <member name="F:Lers.Proto.Messages.MsgLastMeasurePointConsumption.DataTypeFieldNumber">
+            <summary>Field number for the "DataType" field.</summary>
+        </member>
+        <member name="F:Lers.Proto.Messages.MsgLastMeasurePointConsumption.ValuesFieldNumber">
+            <summary>Field number for the "Values" field.</summary>
+        </member>
+        <member name="F:Lers.Proto.Messages.MsgLastMeasurePointTotals.AttributesFieldNumber">
+            <summary>Field number for the "Attributes" field.</summary>
+        </member>
+        <member name="F:Lers.Proto.Messages.MsgLastMeasurePointTotals.DateTimeFieldNumber">
+            <summary>Field number for the "DateTime" field.</summary>
+        </member>
+        <member name="F:Lers.Proto.Messages.MsgLastMeasurePointTotals.ValuesFieldNumber">
+            <summary>Field number for the "Values" field.</summary>
+        </member>
+        <member name="F:Lers.Proto.Messages.MsgLastMeasurePointData.MeasurePointIdFieldNumber">
+            <summary>Field number for the "MeasurePointId" field.</summary>
+        </member>
+        <member name="F:Lers.Proto.Messages.MsgLastMeasurePointData.ResourceKindFieldNumber">
+            <summary>Field number for the "ResourceKind" field.</summary>
+        </member>
+        <member name="F:Lers.Proto.Messages.MsgLastMeasurePointData.VoltageRatioFieldNumber">
+            <summary>Field number for the "VoltageRatio" field.</summary>
+        </member>
+        <member name="P:Lers.Proto.Messages.MsgLastMeasurePointData.VoltageRatio">
+            <summary>
+             Множители для параметров электроэнергии.
+            </summary>
+        </member>
+        <member name="F:Lers.Proto.Messages.MsgLastMeasurePointData.CurrentRatioFieldNumber">
+            <summary>Field number for the "CurrentRatio" field.</summary>
+        </member>
+        <member name="F:Lers.Proto.Messages.MsgLastMeasurePointData.ConsumptionFieldNumber">
+            <summary>Field number for the "Consumption" field.</summary>
+        </member>
+        <member name="F:Lers.Proto.Messages.MsgLastMeasurePointData.TotalsFieldNumber">
+            <summary>Field number for the "Totals" field.</summary>
+        </member>
+        <member name="F:Lers.Proto.Messages.MsgGetLastDataResponse.LastDataFieldNumber">
+            <summary>Field number for the "LastData" field.</summary>
+        </member>
+        <member name="P:Lers.Proto.Messages.MsgGetLastDataResponse.LastData">
+            <summary>
+             Записи с последними данными
+            </summary>
+        </member>
+        <member name="T:Lers.Proto.Messages.MsgGetMeasurePointConsumptionResponseReflection">
+            <summary>Holder for reflection information generated from MsgGetMeasurePointConsumptionResponse.proto</summary>
+        </member>
+        <member name="P:Lers.Proto.Messages.MsgGetMeasurePointConsumptionResponseReflection.Descriptor">
+            <summary>File descriptor for MsgGetMeasurePointConsumptionResponse.proto</summary>
+        </member>
+        <member name="F:Lers.Proto.Messages.MsgGetMeasurePointConsumptionResponse.PressureTypeFieldNumber">
+            <summary>Field number for the "PressureType" field.</summary>
+        </member>
+        <member name="P:Lers.Proto.Messages.MsgGetMeasurePointConsumptionResponse.PressureType">
+            <summary>
+             Тип давления.
+            </summary>
+        </member>
+        <member name="F:Lers.Proto.Messages.MsgGetMeasurePointConsumptionResponse.MonthConsumptionFieldNumber">
+            <summary>Field number for the "MonthConsumption" field.</summary>
+        </member>
+        <member name="P:Lers.Proto.Messages.MsgGetMeasurePointConsumptionResponse.MonthConsumption">
+            <summary>
+             Записи с месячным потреблением.
+            </summary>
+        </member>
+        <member name="F:Lers.Proto.Messages.MsgGetMeasurePointConsumptionResponse.DayConsumptionFieldNumber">
+            <summary>Field number for the "DayConsumption" field.</summary>
+        </member>
+        <member name="P:Lers.Proto.Messages.MsgGetMeasurePointConsumptionResponse.DayConsumption">
+            <summary>
+             Записи с суточным потреблением.
+            </summary>
+        </member>
+        <member name="F:Lers.Proto.Messages.MsgGetMeasurePointConsumptionResponse.HourConsumptionFieldNumber">
+            <summary>Field number for the "HourConsumption" field.</summary>
+        </member>
+        <member name="P:Lers.Proto.Messages.MsgGetMeasurePointConsumptionResponse.HourConsumption">
+            <summary>
+             Записи с часовым потреблением.
+            </summary>
+        </member>
+        <member name="F:Lers.Proto.Messages.MsgGetMeasurePointConsumptionResponse.CurrentConsumptionFieldNumber">
+            <summary>Field number for the "CurrentConsumption" field.</summary>
+        </member>
+        <member name="P:Lers.Proto.Messages.MsgGetMeasurePointConsumptionResponse.CurrentConsumption">
+            <summary>
+             Записи с текущим потреблением.
+            </summary>
+        </member>
+        <member name="T:Lers.Proto.Messages.MsgGetMeasurePointTotalsResponseReflection">
+            <summary>Holder for reflection information generated from MsgGetMeasurePointTotalsResponse.proto</summary>
+        </member>
+        <member name="P:Lers.Proto.Messages.MsgGetMeasurePointTotalsResponseReflection.Descriptor">
+            <summary>File descriptor for MsgGetMeasurePointTotalsResponse.proto</summary>
+        </member>
+        <member name="F:Lers.Proto.Messages.MsgGetMeasurePointTotalsResponse.TotalsFieldNumber">
+            <summary>Field number for the "Totals" field.</summary>
+        </member>
+        <member name="P:Lers.Proto.Messages.MsgGetMeasurePointTotalsResponse.Totals">
+            <summary>
+             Записи с интеграторами
+            </summary>
+        </member>
+        <member name="T:Lers.Proto.Messages.MsgMeasurePointDataRecordReflection">
+            <summary>Holder for reflection information generated from MsgMeasurePointDataRecord.proto</summary>
+        </member>
+        <member name="P:Lers.Proto.Messages.MsgMeasurePointDataRecordReflection.Descriptor">
+            <summary>File descriptor for MsgMeasurePointDataRecord.proto</summary>
+        </member>
+        <member name="F:Lers.Proto.Messages.MsgMeasurePointDataRecord.DateTimeFieldNumber">
+            <summary>Field number for the "DateTime" field.</summary>
+        </member>
+        <member name="P:Lers.Proto.Messages.MsgMeasurePointDataRecord.DateTime">
+            <summary>
+             Дата и время (ticks).
+            </summary>
+        </member>
+        <member name="F:Lers.Proto.Messages.MsgMeasurePointDataRecord.AttributesFieldNumber">
+            <summary>Field number for the "Attributes" field.</summary>
+        </member>
+        <member name="P:Lers.Proto.Messages.MsgMeasurePointDataRecord.Attributes">
+            <summary>
+             Атрибуты записи.
+            </summary>
+        </member>
+        <member name="F:Lers.Proto.Messages.MsgMeasurePointDataRecord.BadValuesFieldNumber">
+            <summary>Field number for the "BadValues" field.</summary>
+        </member>
+        <member name="P:Lers.Proto.Messages.MsgMeasurePointDataRecord.BadValues">
+            <summary>
+             Недостоверные значения.
+            </summary>
+        </member>
+        <member name="F:Lers.Proto.Messages.MsgMeasurePointDataRecord.CalculatedValuesFieldNumber">
+            <summary>Field number for the "CalculatedValues" field.</summary>
+        </member>
+        <member name="P:Lers.Proto.Messages.MsgMeasurePointDataRecord.CalculatedValues">
+            <summary>
+             Рассчитанные значения.
+            </summary>
+        </member>
+        <member name="F:Lers.Proto.Messages.MsgMeasurePointDataRecord.InterpolatedValuesFieldNumber">
+            <summary>Field number for the "InterpolatedValues" field.</summary>
+        </member>
+        <member name="P:Lers.Proto.Messages.MsgMeasurePointDataRecord.InterpolatedValues">
+            <summary>
+             Значения, рассчитанные с помощью интерполяции.
+            </summary>
+        </member>
+        <member name="F:Lers.Proto.Messages.MsgMeasurePointDataRecord.ResettedValuesFieldNumber">
+            <summary>Field number for the "ResettedValues" field.</summary>
+        </member>
+        <member name="P:Lers.Proto.Messages.MsgMeasurePointDataRecord.ResettedValues">
+            <summary>
+             Сброшенные значения (для интеграторов).
+            </summary>
+        </member>
+        <member name="F:Lers.Proto.Messages.MsgMeasurePointDataRecord.ResourceKindFieldNumber">
+            <summary>Field number for the "ResourceKind" field.</summary>
+        </member>
+        <member name="P:Lers.Proto.Messages.MsgMeasurePointDataRecord.ResourceKind">
+            <summary>
+             Тип ресурса.
+            </summary>
+        </member>
+        <member name="F:Lers.Proto.Messages.MsgMeasurePointDataRecord.DataParametersFieldNumber">
+            <summary>Field number for the "DataParameters" field.</summary>
+        </member>
+        <member name="P:Lers.Proto.Messages.MsgMeasurePointDataRecord.DataParameters">
+            <summary>
+             Значения параметров.
+            </summary>
+        </member>
+        <member name="T:Lers.Proto.Messages.MsgMeasurePointImportDataPreviewReflection">
+            <summary>Holder for reflection information generated from MsgMeasurePointImportDataPreview.proto</summary>
+        </member>
+        <member name="P:Lers.Proto.Messages.MsgMeasurePointImportDataPreviewReflection.Descriptor">
+            <summary>File descriptor for MsgMeasurePointImportDataPreview.proto</summary>
+        </member>
+        <member name="F:Lers.Proto.Messages.MsgMeasurePointImportDataPreview.MeasurePointIdFieldNumber">
+            <summary>Field number for the "MeasurePointId" field.</summary>
+        </member>
+        <member name="P:Lers.Proto.Messages.MsgMeasurePointImportDataPreview.MeasurePointId">
+            <summary>
+             Идентификатор точки учета.
+            </summary>
+        </member>
+        <member name="F:Lers.Proto.Messages.MsgMeasurePointImportDataPreview.MeasurePointFullTitleFieldNumber">
+            <summary>Field number for the "MeasurePointFullTitle" field.</summary>
+        </member>
+        <member name="P:Lers.Proto.Messages.MsgMeasurePointImportDataPreview.MeasurePointFullTitle">
+            <summary>
+             Полное наименование точки учёта.
+            </summary>
+        </member>
+        <member name="F:Lers.Proto.Messages.MsgMeasurePointImportDataPreview.ResourceKindFieldNumber">
+            <summary>Field number for the "ResourceKind" field.</summary>
+        </member>
+        <member name="P:Lers.Proto.Messages.MsgMeasurePointImportDataPreview.ResourceKind">
+            <summary>
+             Тип ресурса
+            </summary>
+        </member>
+        <member name="F:Lers.Proto.Messages.MsgMeasurePointImportDataPreview.MonthConsumptionFieldNumber">
+            <summary>Field number for the "MonthConsumption" field.</summary>
+        </member>
+        <member name="P:Lers.Proto.Messages.MsgMeasurePointImportDataPreview.MonthConsumption">
+            <summary>
+             Записи с месячным потреблением.
+            </summary>
+        </member>
+        <member name="F:Lers.Proto.Messages.MsgMeasurePointImportDataPreview.DayConsumptionFieldNumber">
+            <summary>Field number for the "DayConsumption" field.</summary>
+        </member>
+        <member name="P:Lers.Proto.Messages.MsgMeasurePointImportDataPreview.DayConsumption">
+            <summary>
+             Записи с суточным потреблением.
+            </summary>
+        </member>
+        <member name="F:Lers.Proto.Messages.MsgMeasurePointImportDataPreview.HourConsumptionFieldNumber">
+            <summary>Field number for the "HourConsumption" field.</summary>
+        </member>
+        <member name="P:Lers.Proto.Messages.MsgMeasurePointImportDataPreview.HourConsumption">
+            <summary>
+             Записи с часовым потреблением.
+            </summary>
+        </member>
+        <member name="F:Lers.Proto.Messages.MsgMeasurePointImportDataPreview.CurrentConsumptionFieldNumber">
+            <summary>Field number for the "CurrentConsumption" field.</summary>
+        </member>
+        <member name="P:Lers.Proto.Messages.MsgMeasurePointImportDataPreview.CurrentConsumption">
+            <summary>
+             Записи с текущим потреблением.
+            </summary>
+        </member>
+        <member name="F:Lers.Proto.Messages.MsgMeasurePointImportDataPreview.TotalsFieldNumber">
+            <summary>Field number for the "Totals" field.</summary>
+        </member>
+        <member name="P:Lers.Proto.Messages.MsgMeasurePointImportDataPreview.Totals">
+            <summary>
+             Записи с интеграторами
+            </summary>
+        </member>
+    </members>
+</doc>
